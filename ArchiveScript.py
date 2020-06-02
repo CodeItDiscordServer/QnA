@@ -3,6 +3,8 @@ from piazza_api import Piazza
 CLASS_ID="k89brrt3pq17do"
 
 p =Piazza()
+
+# this is a I/O blocking
 p.user_login()
 cs290 = p.network(CLASS_ID)
 posts = cs290.iter_all_posts(limit=1)
