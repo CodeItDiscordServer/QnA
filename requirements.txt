@@ -1,1 +1,3 @@
+flask
 piazza_api
+python3-dotenv
