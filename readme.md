@@ -9,3 +9,15 @@ In this application the python server updates and archives a class into its data
 
 mostly will use the readme for the design document but after awhile it will be here and then printed to a pdf
 https://docs.google.com/document/d/1g0hEmgi6frJIARm_JjIooGh40dn9g_CjF93rX505Y8s/edit?usp=sharing
+
+
+
+### setting up the dot ev,
+the venv is in the gitignore for obvious reasons. its repeated code.
+
+
+```bash
+python3 -m venv venv
+. venv/bin/activate
+pip install flask python-dotenv
+```
