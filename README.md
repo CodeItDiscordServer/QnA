@@ -1,72 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+###Piazza QnA web application
 
-## Available Scripts
+Posts on piazza are unable to be retrieved and used after the semester is over to new students.And most students wish to unsubscribe from the piazza class after the term is over. It is hard to reuse posts.
 
-In the project directory, you can run:
+In this application the python server updates and archives a class into its database, and through the web application one can find answers to their solution, these are read only, and can only be mentioned in a future piazza post for the current class.
 
-### `npm install`
 
-Installs all the necessary dependencies using package.json
 
-### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+mostly will use the readme for the design document but after awhile it will be here and then printed to a pdf
+https://docs.google.com/document/d/1g0hEmgi6frJIARm_JjIooGh40dn9g_CjF93rX505Y8s/edit?usp=sharing
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### setting up the dot ev,
+the venv is in the gitignore for obvious reasons. its repeated code.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+python3 -m venv venv
+. venv/bin/activate
+pip install flask python-dotenv
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+then you are ready to run it, the server is located in ~/server
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd server
+flask run
+```
 
-### `npm run eject`
+## Specific Uses
+Piazza already exists and is great, new classes will create new piazza page. But old classes students like to move on and not get emails about inactive classes sometimes. Anyways using this piazza archive students can easily search old posts and REFERENCE them to their currently enrolled piazza class.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Technologies:
+Flask web server allows easy access to piazza, as well as python modules.
+reactjs web client
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+MongoDB?
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## features
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Search Tool - browse discussions by classname according to the filter
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+link sharing - reference specific discussion and replies from this tool on  active piazza class
