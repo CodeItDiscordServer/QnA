@@ -11,8 +11,10 @@ with open('config.json') as json_file:
 #without the config loaded in like this, its an io blocking prompt
 # i had to read the error and it gave me the expected params, unlike the GITHUB repo. lol.
 p.user_login(email=credents["user"],password=credents["pass"])
-cs290 = p.network(credents["classID"])
-posts = cs290.iter_all_posts(limit=15)
+
+
+
+
 count =0
 
 hardcoded={
@@ -40,6 +42,7 @@ def filterPost(post,filter):
         if(value):
             # these need to be all set to true inside this function
             postDesc[key] = 0
+# here ^^ i set up the requirements of the filter
 ##########################################
     postDesc["limit"] = 1
 
@@ -51,6 +54,7 @@ def filterPost(post,filter):
             postDesc["s-answered"] = 1
 
 ###########################################
+# then i check if each requirmements were filled.
     for key,value in postDesc.items():
         # these need to be all set to true
         if(not value):
@@ -61,11 +65,22 @@ def filterPost(post,filter):
 
 
 
+def searchpizza(filter_src):
+    cs290 = p.network(credents["classID"])
+    posts = cs290.iter_all_posts(limit=15)
+    wants = []
+    for post in posts:
+        if(filterPost(post,hardcoded)):
+            wants.append(post)
+            print("appended")
 
-for post in posts:
-    if(filterPost(post,hardcoded)):
-        wants.append(post)
-        print("appended")
+    return wants
+
+exports = {"searchpizza":searchpizza}
+
+__exports__ = exports
+
+
     ## all this other crap is scratch
 #### end for loop
 
