@@ -104,12 +104,3 @@ __exports__ = exports
 
         #print(post["children"][0]['type']) #i_answer means instructor answer
         ##print(post["children"][0]['subject'])
-
-
-
-
-
-
-
-
-
