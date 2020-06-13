@@ -1,7 +1,6 @@
 import React,{Component} from "react";
 import axios from "axios"
-
-const FAILSTRING = "fail"
+import {LinearProgress } from "@material-ui/core"
 
 
 class Networker extends Component {
@@ -18,7 +17,7 @@ class Networker extends Component {
 // stuff,filename
     // each network call has a body and a usernae
     var objToSend ={}
-    
+
     objToSend.data = this.props.body;
 
 
@@ -36,8 +35,15 @@ class Networker extends Component {
       else{
         self.setState({
           isLoading: false,
+          error: resp
         })
       }
+    })
+    .catch(function(e){
+      alert(e)
+      self.setState({
+        isLoading: false,
+      })
     })
 
   }
@@ -45,9 +51,7 @@ class Networker extends Component {
   render(){
     return(
       <div>
-        {!this.state.error && this.state.isLoading && (<div ><p style={{fontSize: "24px", color: "pink"}}>loading network</p></div>)}
-        {!this.state.isLoading && <p>Done!</p>}
-        {this.state.error && this.state.error}
+        {!this.state.error && this.state.isLoading && <LinearProgress />}
       </div>
     )
   }

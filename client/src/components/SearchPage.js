@@ -1,9 +1,10 @@
 import React from "react";
+
+
 import ResponsiveSearchBox from "./ResponsiveSearchBox.js";
 import NetworkSpinner from "./NetworkSpinner";
 
 
-const FAILSTRING = "fail";
 const SEARCH_URL = "/api/search";
 
 const tags_hardcoded={
@@ -19,17 +20,17 @@ function SearchPage(props){
   const [isLoading, toggleLoading] = React.useState(null);
   return (
     <div>
+    {search && isLoading && (<NetworkSpinner
+      method={"post"}
+      url={SEARCH_URL}
+      body={search}
+      />)}
       <ResponsiveSearchBox tags={tags_hardcoded} Search={function(obj){
         setSearchTerm(obj);
         toggleLoading(true);
       }}/>
       {search && <p>{JSON.stringify(search)}</p>}
 
-      {search && !isLoading && (<NetworkSpinner
-        method={"post"}
-        url={SEARCH_URL}
-        body={search}
-        />)}
     </div>
   )
 }

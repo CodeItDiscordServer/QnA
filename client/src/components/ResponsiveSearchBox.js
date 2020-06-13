@@ -2,6 +2,9 @@
 /* @jsxFrag React.Fragment */
 import * as React from "react";
 import { css, jsx } from '@emotion/core';
+import {Button} from "@material-ui/core"
+
+
 // import {Link} from "react-router-dom";
 
  const tags_contaier=css`
@@ -151,9 +154,9 @@ function ResponsiveSearchBox(props) {
                 </div>
               </div>
               <div>
-                <button type="button" onClick={function(){
+                <Button size="large" variant="outlined"  onClick={function(){
                   props.Search(chcks)
-                }}>Search</button>
+                }}>Search</Button>
               </div>
           </div>
 
