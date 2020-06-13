@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
 
+import SearchPage from "./components/SearchPage";
+import Banner from "./components/Banner.js";
 function App() {
   return (
       <div>
-      WELCOME TO QNA using Piazza by Code It Discord Server
+        <Banner />
+        <SearchPage />
       </div>
     );
 }
