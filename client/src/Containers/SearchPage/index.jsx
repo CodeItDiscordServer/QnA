@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux';
-
+import reducer from '../../Reducers'
 
 const SearchPage=(props)=>{
     return (
@@ -22,11 +22,11 @@ const SearchPage=(props)=>{
 
 
 const stateToProps = state =>({
-    searchState:""
+    searchState:state.searchState
 })
 
 const dispatchToProps = ()=>dispatch=>({
-
+    
 })
 
 export default connect(stateToProps,dispatchToProps)(SearchPage);
