@@ -5,7 +5,7 @@ import ResponsiveSearchBox from "./ResponsiveSearchBox.js";
 import NetworkSpinner from "./NetworkSpinner";
 
 
-const SEARCH_URL = "/api/search";
+const SEARCH_URL = "http://localhost:5000/api/search";
 
 const tags_hardcoded={
   "hw1": false,
