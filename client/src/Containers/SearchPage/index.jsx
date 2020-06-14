@@ -1,32 +1,16 @@
 import React from 'react'
 import {connect} from 'react-redux';
-import reducer from '../../Reducers'
+import reducer,* as methods from '../../Reducers'
+import SearchBox from './Components/SearchComponent'
+import SearchResults from './Components/SearchResults'
 
 const SearchPage=(props)=>{
     return (
-        <div>
-        {search && isLoading && (<NetworkSpinner
-          method={"post"}
-          url={SEARCH_URL}
-          body={search}
-          />)}
-          <ResponsiveSearchBox tags={tags_hardcoded} Search={function(obj){
-            setSearchTerm(obj);
-            toggleLoading(true);
-          }}/>
-          {search && <p>{JSON.stringify(search)}</p>}
-    
+        <div className="SearchContainer">
+          
         </div>
       )
 }
 
 
-const stateToProps = state =>({
-    searchState:state.searchState
-})
-
-const dispatchToProps = ()=>dispatch=>({
-    
-})
-
-export default connect(stateToProps,dispatchToProps)(SearchPage);
+export default SearchPage;
