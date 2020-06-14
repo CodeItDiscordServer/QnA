@@ -19,8 +19,6 @@ const SEARCH_URL = "http://localhost:5000/api/search";
 const searchState = (state=initialState,action)=>{
     switch(action.type){    
         
-
-
         default:
             return state
     }

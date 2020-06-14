@@ -36,8 +36,8 @@ export const search = async (filters) => dispatch => {
     dispatch(fetching());
     
     // Async calls to the server
-    filters;
-    await;
+    
+    await setTimeout(()=>{},2000);
     // Set state to loaded
     dispatch(setSearchResults(status=status,results = results))
  
