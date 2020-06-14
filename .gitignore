@@ -1,6 +1,5 @@
-./node_modules/
 ./server/apiEnv/
 server/venv
-server/__pycache__
-./server/__pycache__/
-./package-lock.json
+server/__pycache__/
+server/src/__pycache__/
+client/node_modules

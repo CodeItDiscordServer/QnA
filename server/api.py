@@ -14,7 +14,6 @@ hardcoded={
         "search": 0
 }
 
-print(searchpizza)
 @app.route('/api/')
 def GiveGrettings():
     return {"greetings": "you suck big pp"}
@@ -24,7 +23,7 @@ def GiveGrettings():
 def SearchCS290():
     the_filter = {}
     classid = "hardcoded"
-
+    print('hello')
     for key,value in hardcoded.items():
         #parse the request with the hardcoded set of possible filters
         if(request.args.get(key)):
