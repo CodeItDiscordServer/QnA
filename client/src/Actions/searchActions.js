@@ -1,8 +1,9 @@
 import {TOGGLE_TAG,SEARCH,SET_SEARCH_RESULTS,FETCHING} from '../ActionTypes/ActionTypes'
 
-/* 
 
-ASYNC ACTIONS ARE FUNCTIONS THAT DISPATCH ACTIONS MEANWHILE CALLING 
+/*
+
+ASYNC ACTIONS ARE FUNCTIONS THAT DISPATCH ACTIONS MEANWHILE CALLING
 API'S AND OTHER THINGS
 
 */
@@ -31,14 +32,13 @@ export const setSearchResults = (status=404,results=[]) =>({
 export const search = (filters) => dispatch => {
     let results = []
     let status=200;
-  
+
     // Set state to loading
     dispatch(fetching());
-    
+
     // Async calls to the server
-    filters;
     setTimeout(()=>{},2000);
     // Set state to loaded
     dispatch(setSearchResults(status=status,results = results))
- 
+
 }

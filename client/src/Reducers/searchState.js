@@ -22,14 +22,14 @@ const initialState = {
 
 
 
-const SEARCH_URL = "http://localhost:5000/api/search";
+const SEARCH_URL = "/api/search";
 
 const searchState = (state=initialState,action)=>{
-    switch(action.type){    
+    switch(action.type){
         case FETCHING:
             let newState = Object.assign({},state,{pageState:{loading:true}})
             return newState
-        
+
         case SET_SEARCH_RESULTS:
             if(action.status===204){
                 let newState = Object.assign({},state,{
@@ -47,7 +47,9 @@ const searchState = (state=initialState,action)=>{
             return state
     }
 }
-
+/* these will notwork, with the combine reducers, now everytihg has another layer.
+state.search.pageState.searchResults, but searchresuls is not even in pageState.
+*/
 export const isLoading = (state)=>state.pageState.isLoading
 export const searchResults = (state) => state.pageState.searchResults
 export default searchState;

@@ -1,8 +1,13 @@
 import {combineReducers} from 'redux'
-import searchState,* as searchFuncs from './searchState'
+import search,* as searchFuncs from './searchState'
 
+
+/*
+search state only needs to be called search, because
+its always referenced like this state.search,
+*/
 export default combineReducers({
-    searchState
+    search
 });
 
 

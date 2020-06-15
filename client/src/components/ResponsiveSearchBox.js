@@ -72,7 +72,7 @@ function ResponsiveSearchBox(props) {
       position: absolute;
       background-color: Beige;
       font-size: 32px;
-      width: ${hamShow ?  '50vw' : '0px'};
+      width: ${hamShow ?  '80vw' : '0px'};
       height: 100vh;
       overflow: scroll;
         &::before{

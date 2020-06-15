@@ -1,6 +1,11 @@
 import React from 'react'
+import NetworkSpinner from "../../../components/NetworkSpinner.js"
+const SEARCH_URL = "/api/search";
 
 const SearchBox = (props)=>{
+  const {searchResults, isLoading} = props;
+  const [search,setSearchTerm] = React.useState(null);
+  const [isLoading, toggleLoading] = React.useState(null);
     return (
         <div>
         {search && isLoading && (<NetworkSpinner
@@ -13,7 +18,7 @@ const SearchBox = (props)=>{
             toggleLoading(true);
           }}/>
           {search && <p>{JSON.stringify(search)}</p>}
-    
+
         </div>
     )
 }
@@ -21,13 +26,12 @@ const SearchBox = (props)=>{
 
 
 const stateToProps = state =>({
-    isLoading:methods.isSearchPageLoading(state),
-    searchResults:methods.searchResults(state)
+    isLoading: state.search.isLoadingResults,
+    searchResults: state.search.results;
 })
 
 const dispatchToProps = ()=>dispatch=>({
-   
+
 })
 
 export default connect(stateToProps,dispatchToProps)(SearchBox);
-
