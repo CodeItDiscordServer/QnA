@@ -1,4 +1,4 @@
-import {TOGGLE_TAG,SEARCH,SET_SEARCH_RESULTS,FETCHING} from '../ActionTypes/ActionTypes'
+import {TOGGLE_TAG,SEARCH,SET_SEARCH_RESULTS,FETCHING,UPDATE_SEARCH_TAG} from '../ActionTypes/ActionTypes'
 import {getData} from '../Api/'
 
 /*
@@ -13,20 +13,24 @@ const status ={
     405:"CAN'T CONNECT TO SERVER"
 }
 
-export const toggleTag = (tag)=>({
+export const updateTags = (tags)=>({
     type:TOGGLE_TAG,
-    value:tag
+    value:tags
 })
-
+export const updateSearchText = (text)=>({
+    type:UPDATE_SEARCH_TAG,
+    value:text
+})
 export const fetching = ()=>({
     type:FETCHING
 })
 
-export const setSearchResults = (status=404,results=[]) =>({
+export const updateSearchResults = (status=404,results=[]) =>({
     type:SET_SEARCH_RESULTS,
     status:status,
     results:results
 })
+
 
 
 export const search = (filters) => dispatch => {
@@ -40,6 +44,6 @@ export const search = (filters) => dispatch => {
     getData('post','/api/search',filters)
     setTimeout(()=>{},2000);
     // Set state to loaded
-    dispatch(setSearchResults(status=status,results = results))
+    dispatch(updateSearchResults(status=status,results = results))
 
 }
