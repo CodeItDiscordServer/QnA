@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-
-import SearchPage from "./components/SearchPage";
+import SearchPage from './Containers/SearchPage'
+// import SearchPage from "./components/SearchPage";
 import Banner from "./components/Banner.js";
 function App() {
   return (

@@ -1,20 +1,14 @@
 import axios from 'axios'
 
 
-const getData = (method,url,objToSend) => {
+export const getData = (method,url,objToSend) => {
     axios[method](url,objToSend)
     .then(function(resp){
       if(resp.status===200){
-        self.setState({
-          isLoading: false,
-          data: resp.data,
-        });
-        if(self.props.onData){
-          self.props.onData(resp.data);
+        return resp.data
         }
-      }
       else{
-        self.setState({
+        return ({
           isLoading: false,
           error: resp
         })
@@ -22,8 +16,9 @@ const getData = (method,url,objToSend) => {
     })
     .catch(function(e){
       alert(e)
-      self.setState({
+      return ({
         isLoading: false,
+        error:"Bhaut Hard"
       })
     })
 }

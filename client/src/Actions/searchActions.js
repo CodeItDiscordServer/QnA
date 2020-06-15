@@ -1,5 +1,5 @@
 import {TOGGLE_TAG,SEARCH,SET_SEARCH_RESULTS,FETCHING} from '../ActionTypes/ActionTypes'
-
+import {getData} from '../Api/'
 
 /*
 
@@ -37,6 +37,7 @@ export const search = (filters) => dispatch => {
     dispatch(fetching());
 
     // Async calls to the server
+    getData('post','/api/search',filters)
     setTimeout(()=>{},2000);
     // Set state to loaded
     dispatch(setSearchResults(status=status,results = results))
