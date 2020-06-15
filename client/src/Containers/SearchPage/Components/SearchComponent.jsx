@@ -2,7 +2,7 @@ import React from 'react'
 import NetworkSpinner from "../../../components/NetworkSpinner.js"
 import ResponsiveSearchBox from '../../../components/ResponsiveSearchBox'
 import {connect} from 'react-redux'
-import {search} from '../../../Actions/searchActions'
+import {search,updateTags,updateSearchText} from '../../../Actions/searchActions'
 const SEARCH_URL = "/api/search";
 
 const SearchBox = (props)=>{
@@ -16,7 +16,7 @@ const SearchBox = (props)=>{
           url={SEARCH_URL}
           body={search}
           />)}
-          <ResponsiveSearchBox tags={props.filters.tags} Search={props.Search}
+          <ResponsiveSearchBox filters={props.filters} Search={props.Search} updateTags = {props.updateTags} updateSearchText = {props.updateSearchText}
           //   function(obj){
           //   setSearchTerm(obj);
           //   toggleLoading(true);
@@ -38,7 +38,10 @@ const stateToProps = state =>({
 })
 
 const dispatchToProps = {
-    Search:search
+    Search:search,
+    updateTags,
+    updateSearchText
+
 }
 
 export default connect(stateToProps,dispatchToProps)(SearchBox);
