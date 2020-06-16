@@ -2,7 +2,7 @@
 /* @jsxFrag React.Fragment */
 import  React,{useEffect} from "react";
 import { css, jsx } from '@emotion/core';
-import {Button} from "@material-ui/core"
+import {Button,CircularProgress} from "@material-ui/core"
 import { updateSearchText } from "../Actions/searchActions";
 
 
@@ -50,15 +50,23 @@ function ResponsiveSearchBox(props) {
   })
   const searchInput = css`
     height:2vw;
-    width:70%;
-    border-radius:10px;
-    border:2px solid black;
-    &.selected{
-      border-color:blue;
+    width:90%;
+    font-size:1.90vw;
+    font-weight:800;
+    color:#2ecc7a;
+    padding:15px;
+    border-radius:30px;
+    background-color:rgba(0,0,0,0.0);       
+    border:01px solid rgba(0,0,0,0.4);
+    box-shadow:2px 2px #00000025;
+    &:active,
+    &:focus{
+      outline:none;
+      background-color:rgba(0,0,0,0.05);       
     }
   `
   const navItem=css`
-  margin: 15px;
+  margin: 5px;
   font-size:1.2vw;
   display:inline-block;
   &.li{
@@ -114,41 +122,30 @@ function ResponsiveSearchBox(props) {
           </div>
 
           <div id="search-filter-box" css={check}>
-            <div  onClick={function(e){e.stopPropagation()}}>
+            <div css={css`display:flex;width:100%;`}>
+            <div css={css`flex:11;alignment-baseline:center;`} onClick={function(e){e.stopPropagation()}} >
               <label htmlFor="search-text">
                 <input type="text"
-                
+                placeholder={"What is the formula of...?"}
                 css={searchInput}
                   value={searchText}
                   onChange={(event) => {props.updateSearchText(event.target.value)}} />
                 </label>
             </div>
-            <h3 css={css`font-weight:400;font-size:20px;`}>Tags </h3>
-            <div css={tags_contaier}>
-            <div className="check-container" css={navItem}>
-               <input type="checkbox" id="instructor-answered" value={chcks.i_answer}
-               onChange={function(){
-                 updateChecks({
-                   ...chcks,
-                   i_answer: !chcks.i_answer
-                 })
-                }} />
-               <label htmlFor="instructor-answered"></label>
-               <div className="tag">Instructor has answered</div>
-             </div>
-             <div className="check-container" css={navItem}>
-                <input type="checkbox" id="student-answered" value={chcks.s_answer}
-                onChange={function(){
-                  updateChecks({
-                    ...chcks,
-                    s_answer: !chcks.s_answer
-                  })
-                 }} />
-                <label htmlFor="student-answered"></label>
-                <div className="tag">Student has answered</div>
-              </div>
+            <div css={css`alignment-baseline:center;flex:1;padding:5px;`}>
+            {props.loading?(<CircularProgress />):
+                (<Button  size="large" variant="outlined" onClick={function(){
+                  props.Search(chcks) }}>
+                  
+                  Search
 
-            </div >
+                </Button>)}
+                {/* <button css={css`padding:5px;outline:none;`}>Hellle</button> */}
+                </div>
+                </div>
+
+            <h3 css={css`font-weight:400;font-size:20px;`}>Tags </h3>
+            
               <div id="tags-list">
                 
                 <div css={tags_contaier}>
@@ -170,9 +167,7 @@ function ResponsiveSearchBox(props) {
                 </div>
               </div>
               <div>
-                <Button size="large" variant="outlined" onClick={function(){
-                  props.Search(chcks)
-                }}>Search</Button>
+              
               </div>
           </div>
 
@@ -191,9 +186,11 @@ export default ResponsiveSearchBox;
 const check = css`
 .tag{
   width: auto;
+  color:rgba(0,0,0,0.2)
+  margin:10px;
 }
 &{
-  margin: 10px;
+  margin: 5px;
 }
 label{
   width: auto;
@@ -230,10 +227,10 @@ input[type="checkbox"]{
      right:10px;
      transition:all 0.3s ease;
      cursor:pointer;
-     width:20px;
-     border:3px solid #444;
-     border-radius:50%;
-     height:20px;
+     width:15px;
+     border:3px solid #666;
+    //  border-radius:50%;
+     height:15px;
    }
 
    .tag{
@@ -265,3 +262,33 @@ input[type="checkbox"]{
      border-left:4px solid #2ecc7a;
    }
 `;
+
+
+
+
+
+{/* <div css={tags_contaier}>
+            <div className="check-container" css={navItem}>
+               <input type="checkbox" id="instructor-answered" value={chcks.i_answer}
+               onChange={function(){
+                 updateChecks({
+                   ...chcks,
+                   i_answer: !chcks.i_answer
+                 })
+                }} />
+               <label htmlFor="instructor-answered"></label>
+               <div className="tag">Instructor has answered</div>
+             </div>
+             <div className="check-container" css={navItem}>
+                <input type="checkbox" id="student-answered" value={chcks.s_answer}
+                onChange={function(){
+                  updateChecks({
+                    ...chcks,
+                    s_answer: !chcks.s_answer
+                  })
+                 }} />
+                <label htmlFor="student-answered"></label>
+                <div className="tag">Student has answered</div>
+              </div>
+
+            </div > */}

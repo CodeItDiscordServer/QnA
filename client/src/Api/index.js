@@ -15,7 +15,7 @@ export const getData = (method,url,objToSend) => {
       }
     })
     .catch(function(e){
-      alert(e)
+      // alert(e)
       return ({
         isLoading: false,
         error:"Bhaut Hard"

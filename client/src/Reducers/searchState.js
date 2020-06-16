@@ -3,7 +3,8 @@ import {FETCHING,SET_SEARCH_RESULTS,SEARCH,TOGGLE_TAG,UPDATE_SEARCH_TAG} from '.
 const SEARCH_URL = "/api/search";
 
 const tags_hardcoded={
-
+    "Instructor has answered": false,
+    "Student has answered": false,
     "hw1": false,
     "hw2": false,
     "hw3": false,
@@ -66,7 +67,7 @@ const searchState = (state=initialState,action)=>{
             else if(action.status===303){}
         default:
             return {
-                searchresults:state.searchResults,
+                searchResults:state.searchResults,
                 pageState:pageState(state.pageState,action),
                 filters:filterState(state.filterState,action)
             }
@@ -78,6 +79,6 @@ state.search.pageState.searchResults, but searchresuls is not even in pageState.
 
 Done. :)
 */
-export const isLoading = (state)=>state.pageState.isLoading
+export const isLoading = (state)=>state.pageState.loading
 export const searchResults = (state) => state.pageState.searchResults
 export default searchState;

@@ -42,8 +42,8 @@ export const search = (filters) => dispatch => {
 
     // Async calls to the server
     getData('post','/api/search',filters)
-    setTimeout(()=>{},2000);
+    setTimeout(()=>{dispatch(updateSearchResults(status=status,results = results))},2000);
     // Set state to loaded
-    dispatch(updateSearchResults(status=status,results = results))
+    
 
 }

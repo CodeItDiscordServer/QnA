@@ -13,5 +13,8 @@ export default combineReducers({
 
 
 
-export const isSearchPageLoading = (state)=>searchFuncs.isLoading(state.searchState)
-export const searchResults = (state) => searchFuncs.searchResults(state.searchState)
+export const isSearchPageLoading = (state)=>{
+    // alert(state.search.pageState.loading)
+    return searchFuncs.isLoading(state.search)}
+
+export const searchResults = (state) => searchFuncs.searchResults(state.search)
