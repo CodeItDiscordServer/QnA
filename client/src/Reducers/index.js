@@ -9,15 +9,15 @@ const tags_hardcoded={
     "Instructor has answered": false,
     "Student has answered": false,
     "hw1": false,
-    "hw2": false,
-    "hw3": false,
+    "hw2": true,
+    "hw3": true,
     "hw4": false
   };
 
 const initialState = {
   PiazzaSearchResults : [],
     filterState:{
-        searchText: "",
+        searchText: "asdf",
         tags:tags_hardcoded
     },
 
@@ -85,7 +85,11 @@ export default combineReducers({
     filterState,
 });
 
-/* i moved searchstate.js to index, because you were referencing the same variables in
+
+
+/* maybe move these to a file ./selectors.js
+
+i moved searchstate.js to index, because you were referencing the same variables in
 two different files, just one file, you could create another file
 and put these selectors in them, but do not reference them here as well if you do {
 */

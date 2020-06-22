@@ -112,7 +112,6 @@ function ResponsiveSearchBox(props) {
       });
       return;
     }
-
   return (
     <div css={css`width: auto;`}>
     {!hamShow && <div css={hamburgerIcons} onClick={()=>toggleBurger(!hamShow)}>
@@ -134,8 +133,7 @@ function ResponsiveSearchBox(props) {
                 <label htmlFor="search-text">
                   <input type="text"
                   placeholder={"What is the formula of...?"}
-                  css={searchInput}
-
+                  css={searchInput} value={props.filters.searchText}
                     onChange={(event) => {updateSearchText(event.target.value)}} />
                   </label>
               </div>
@@ -157,8 +155,9 @@ function ResponsiveSearchBox(props) {
                 <div css={tags_contaier}>
                     {Object.keys(props.filters.tags).map(function(key){
                       return (<div key={`tag-check-${key}`} className="check-container" css={navItem}>
-                         <input type="checkbox" id={`tag-${key}`} value={props.filters.tags[key]}
-                         onChange={function(){
+                         <input type="checkbox" id={`tag-${key}`}
+                          checked={props.filters.tags[key]}
+                          onChange={function(){
 
                           let newTags = props.filters.tags;
                            newTags[key] = !newTags[key];
