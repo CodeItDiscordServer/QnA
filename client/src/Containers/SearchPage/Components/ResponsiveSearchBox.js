@@ -129,6 +129,9 @@ function ResponsiveSearchBox(props) {
 
           <div id="search-filter-box" css={check}>
             <div css={css`display:flex;width:100%;`}>
+
+            {/* this is the search input for Search text. it can be broken up in to words
+              seperated by " " spaces.*/}
               <div css={css`flex:11;alignment-baseline:center;`} onClick={function(e){e.stopPropagation()}} >
                 <label htmlFor="search-text">
                   <input type="text"
@@ -137,6 +140,7 @@ function ResponsiveSearchBox(props) {
                     onChange={(event) => {updateSearchText(event.target.value)}} />
                   </label>
               </div>
+
             <div css={css`alignment-baseline:center;flex:1;padding:5px;`}>
               {props.loading ? (<CircularProgress />) :
                 (<Button  size="large" variant="outlined" onClick={function(){
@@ -149,10 +153,9 @@ function ResponsiveSearchBox(props) {
                 </div>
 
             <h3 css={css`font-weight:400;font-size:20px;`}>Tags </h3>
-
-              <div id="tags-list">
-
-                <div css={tags_contaier}>
+              <div id="tags-list" css={tags_contaier}>
+              {/* the list of true/false filters, the checkbox will be used, but not applied yet.
+                the filter is saved in the site memory with other filters.*/}
                     {Object.keys(props.filters.tags).map(function(key){
                       return (<div key={`tag-check-${key}`} className="check-container" css={navItem}>
                          <input type="checkbox" id={`tag-${key}`}
@@ -169,8 +172,7 @@ function ResponsiveSearchBox(props) {
                          <div className="tag">{key}</div>
                        </div>)
                     })}
-                </div>
-              </div>
+                    </div>
               <div>
 
               </div>
