@@ -45,6 +45,9 @@ const filterState  = (state=initialState.filterState,action)=>{
             classid: action.id
           }
         case UPDATE_POST_FILTER:
+        /* the entire filter is updated
+        and calls this when something is modified
+        in ResponsiveSearchBox*/
           return action.filter
         default:
           return state;
