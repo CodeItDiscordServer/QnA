@@ -1,9 +1,10 @@
 /** @jsx jsx */
 /* @jsxFrag React.Fragment */
-import  React,{useEffect} from "react";
+import  React from "react";
 import { css, jsx } from '@emotion/core';
 import {Button,CircularProgress} from "@material-ui/core"
-import { updateSearchText } from "../Actions/searchActions";
+
+
 
 
 // import {Link} from "react-router-dom";
@@ -35,19 +36,9 @@ const gen = css`
   }
 `
 function ResponsiveSearchBox(props) {
-  const chcks = props.filters
-  let searchText;
   var [hamShow,toggleBurger] = React.useState(false);
-  const [updateChecks] = React.useState({
-    searchText: "",
-    i_answer: false,
-    s_answer: false,
-    tags: props.tags
-  })
 
-  useEffect(()=>{
-    searchText = chcks.searchText;
-  })
+
   const searchInput = css`
     height:2vw;
     width:90%;
@@ -56,13 +47,13 @@ function ResponsiveSearchBox(props) {
     color:#2ecc7a;
     padding:15px;
     border-radius:30px;
-    background-color:rgba(0,0,0,0.0);       
+    background-color:rgba(0,0,0,0.0);
     border:01px solid rgba(0,0,0,0.4);
     box-shadow:2px 2px #00000025;
     &:active,
     &:focus{
       outline:none;
-      background-color:rgba(0,0,0,0.05);       
+      background-color:rgba(0,0,0,0.05);
     }
   `
   const navItem=css`
@@ -106,6 +97,22 @@ function ResponsiveSearchBox(props) {
       }
     }`
 
+
+    const updateSearchText = (text)=>{
+      props.updateFilter({
+        ...props.filters,
+        searchText: text
+      });
+      return;
+    }
+    const updateTags = (tags)=>{
+      props.updateFilter({
+        ...props.filters,
+        tags
+      });
+      return;
+    }
+
   return (
     <div css={css`width: auto;`}>
     {!hamShow && <div css={hamburgerIcons} onClick={()=>toggleBurger(!hamShow)}>
@@ -123,41 +130,40 @@ function ResponsiveSearchBox(props) {
 
           <div id="search-filter-box" css={check}>
             <div css={css`display:flex;width:100%;`}>
-            <div css={css`flex:11;alignment-baseline:center;`} onClick={function(e){e.stopPropagation()}} >
-              <label htmlFor="search-text">
-                <input type="text"
-                placeholder={"What is the formula of...?"}
-                css={searchInput}
-                  value={searchText}
-                  onChange={(event) => {props.updateSearchText(event.target.value)}} />
-                </label>
-            </div>
+              <div css={css`flex:11;alignment-baseline:center;`} onClick={function(e){e.stopPropagation()}} >
+                <label htmlFor="search-text">
+                  <input type="text"
+                  placeholder={"What is the formula of...?"}
+                  css={searchInput}
+
+                    onChange={(event) => {updateSearchText(event.target.value)}} />
+                  </label>
+              </div>
             <div css={css`alignment-baseline:center;flex:1;padding:5px;`}>
-            {props.loading?(<CircularProgress />):
+              {props.loading ? (<CircularProgress />) :
                 (<Button  size="large" variant="outlined" onClick={function(){
-                  props.Search(chcks) }}>
-                  
+                  props.Search() }}>
+
                   Search
 
                 </Button>)}
-                {/* <button css={css`padding:5px;outline:none;`}>Hellle</button> */}
                 </div>
                 </div>
 
             <h3 css={css`font-weight:400;font-size:20px;`}>Tags </h3>
-            
+
               <div id="tags-list">
-                
+
                 <div css={tags_contaier}>
                     {Object.keys(props.filters.tags).map(function(key){
                       return (<div key={`tag-check-${key}`} className="check-container" css={navItem}>
-                         <input type="checkbox" id={`tag-${key}`} value={chcks.tags[key]}
+                         <input type="checkbox" id={`tag-${key}`} value={props.filters.tags[key]}
                          onChange={function(){
-                           
-                          let newTags = chcks.tags;
+
+                          let newTags = props.filters.tags;
                            newTags[key] = !newTags[key];
                            // Called Action to change tags
-                           props.updateTags(newTags)
+                           updateTags(newTags)
 
                           }} />
                          <label htmlFor={`tag-${key}`}></label>
@@ -167,7 +173,7 @@ function ResponsiveSearchBox(props) {
                 </div>
               </div>
               <div>
-              
+
               </div>
           </div>
 

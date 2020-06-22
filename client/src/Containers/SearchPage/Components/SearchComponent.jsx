@@ -1,45 +1,48 @@
 import React from 'react'
+import {connect} from 'react-redux';
+
+
 import NetworkSpinner from "../../../components/NetworkSpinner.js"
-import ResponsiveSearchBox from '../../../components/ResponsiveSearchBox'
-import {connect} from 'react-redux'
-import {search,updateTags,updateSearchText} from '../../../Actions/searchActions'
-import {isSearchPageLoading} from '../../../Reducers/index'
-import {} from '@material-ui/core'
+import ResponsiveSearchBox from './ResponsiveSearchBox'
+import {SearchSequence,set_filter} from '../../../Actions/searchActions'
+import {isSearchPageLoading,SearchPageFilters} from '../../../Reducers/index.js'
+import {} from '@material-ui/core';
+
+
+
+
+
 const SEARCH_URL = "/api/search";
+// BagOfThreads: state.search.results,
 
 const stateToProps = state =>({
   isLoading: isSearchPageLoading(state),
-  searchResults: state.search.results,
-  filters:state.search.filters
+  filters: SearchPageFilters(state)
 })
 
 const dispatchToProps = {
-  Search:search,
-  updateTags,
-  updateSearchText
-
+  SearchSequence,
+  set_filter
 }
 
 const SearchBox = (props)=>{
-  const {searchResults, isLoading} = props;
-  const [search,setSearchTerm] = React.useState(null);
-  const [toggleLoading] = React.useState(null);
+  const {isLoading, filters} = props;
+
     return (
         <div>
-          
-          {/* {search && !isLoading && (<NetworkSpinner
-            method="post"
+
+           {isLoading && (<NetworkSpinner
+            method="get"
             url={SEARCH_URL}
-            body={search}
-            />)} */}
-          
-          <ResponsiveSearchBox 
-              loading={props.isLoading} filters={props.filters}
-              Search={props.Search} updateTags = {props.updateTags} 
-              updateSearchText = {props.updateSearchText}
+            body={filters}
+            />)}
+
+          <ResponsiveSearchBox
+              loading={props.isLoading} filters={filters}
+              SearchSequence={props.SearchSequence} updateFilter={props.set_filter}
               />
 
-          {search && <p>{JSON.stringify(search)}</p>}
+          {filters && <p>{JSON.stringify(filters)}</p>}
 
         </div>
     )
