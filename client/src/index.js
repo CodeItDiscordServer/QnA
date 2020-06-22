@@ -16,7 +16,7 @@ import * as serviceWorker from './serviceWorker';
 // let el = compose(applyMiddleware(ThunkMiddleware),
 //     window.__REDUX_DEVTOOLS_EXTENSION__ &&
 //     window.__REDUX_DEVTOOLS_EXTENSION__());
-const store = createStore(rootReducer,applyMiddleware(ThunkMiddleware));
+const store = createStore(rootReducer,compose(applyMiddleware(ThunkMiddleware),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 
 console.log(store);
 

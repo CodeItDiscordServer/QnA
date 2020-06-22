@@ -9,15 +9,15 @@ const tags_hardcoded={
     "Instructor has answered": false,
     "Student has answered": false,
     "hw1": false,
-    "hw2": true,
-    "hw3": true,
+    "hw2": false,
+    "hw3": false,
     "hw4": false
   };
 
 const initialState = {
   PiazzaSearchResults : [],
     filterState:{
-        searchText: "asdf",
+        searchText: "",
         tags:tags_hardcoded
     },
 
@@ -32,6 +32,7 @@ const pageState =  (state=initialState.pageState,action)=>{
             let newState = Object.assign({},state,{loading:true})
             return newState
 
+        
         default:
             return state;
     }
@@ -59,7 +60,7 @@ const filterState  = (state=initialState.filterState,action)=>{
 const searchState = (state=initialState.PiazzaSearchResults,action)=>{
     switch(action.type){
         case SET_SEARCH_RESULTS:
-            if(action.status===204){
+            if(action.status===500){
                 let newState = Object.assign({},state,{
                     pageState:{loading:false,error:true,message:"No Search Results"},
                 })}

@@ -140,7 +140,7 @@ function ResponsiveSearchBox(props) {
             <div css={css`alignment-baseline:center;flex:1;padding:5px;`}>
               {props.loading ? (<CircularProgress />) :
                 (<Button  size="large" variant="outlined" onClick={function(){
-                  props.Search() }}>
+                  props.SearchSequence() }}>
 
                   Search
 
