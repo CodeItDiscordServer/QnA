@@ -19,7 +19,7 @@ def GiveGrettings():
     return {"greetings": "you suck big pp"}
 
 
-@app.route("/api/search")
+@app.route("/api/search",methods=["GET","POST"])
 def SearchCS290():
     the_filter = {}
     classid = "hardcoded"
