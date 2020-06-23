@@ -27,12 +27,26 @@ const initialState = {
 }
 
 const pageState =  (state=initialState.pageState,action)=>{
-    switch(action.type){
+  let newState    ;
+  switch(action.type){
+      
         case FETCHING:
-            let newState = Object.assign({},state,{loading:true})
+            newState = Object.assign({},state,{loading:true})
             return newState
-
-        
+        case SET_SEARCH_RESULTS:
+          if(action.status==200)
+          {
+            newState = Object.assign({},state,{loading:false})
+          }
+          else if(action.status==500)
+          {  
+            newState = Object.assign({},state,{
+          
+             loading:false,error:true,message:"No Search Results"
+          
+            })
+          }
+          return newState
         default:
             return state;
     }
@@ -61,15 +75,13 @@ const searchState = (state=initialState.PiazzaSearchResults,action)=>{
     switch(action.type){
         case SET_SEARCH_RESULTS:
             if(action.status===500){
-                let newState = Object.assign({},state,{
-                    pageState:{loading:false,error:true,message:"No Search Results"},
-                })}
+                return []
+               
+              }
+
             else if(action.status ===200){
-                let newState = Object.assign({},state,{
-                    pageState:{loading:false},
-                  PiazzafiltersSearchResults: action.results
-                })
-                return newState
+                return action.results
+                
             }
             else if(action.status===303){}
         default:
@@ -97,3 +109,4 @@ and put these selectors in them, but do not reference them here as well if you d
 export const isSearchPageLoading = (state)=>state.pageState.loading
 export const searchResults = (state) => state.pageState.searchResults
 export const SearchPageFilters = (state) => state.filterState
+
