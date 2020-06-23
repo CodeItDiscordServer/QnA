@@ -29,4 +29,4 @@ def SearchCS290():
         if(request.args.get(key)):
             the_filter[key] = request.args.get(key)
     #####
-    return { "results": searchpizza(the_filter) }
+    return { "results": searchpizza(the_filter) },200
