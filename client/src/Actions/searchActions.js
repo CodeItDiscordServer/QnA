@@ -1,6 +1,5 @@
-import {TOGGLE_TAG,SEARCH,SET_SEARCH_RESULTS,
-  FETCHING,
-  UPDATE_POST_FILTER} from '../ActionTypes/ActionTypes'
+import {SET_SEARCH_RESULTS,
+  FETCHING,UPDATE_POST_FILTER} from '../ActionTypes/ActionTypes'
 import { G_SRCH_RSLTS_URL} from '../ActionTypes/UrlTypes';
 
 import axios from "axios";
@@ -11,7 +10,7 @@ API'S AND OTHER THINGS
 
 */
 
-const status ={
+const HTTP_MSGS ={
     404:"NO RESULTS",
     405:"CAN'T CONNECT TO SERVER"
 }
@@ -24,7 +23,8 @@ export const set_filter = (filter) =>{
   }
 }
 
-export const fetching = ()=>({
+// the type fetching is first state of the sequence
+export const INIT_FETCH= ()=>({
     type:FETCHING
 })
 
@@ -37,11 +37,10 @@ export const updateSearchResults = (status=404,results=[]) =>({
 
 
 export const SearchSequence = (filters) => dispatch => {
-    let results = []
-    let status=200;
+
 
     // Set state to loading
-    dispatch(fetching());
+    dispatch(INIT_FETCH());
 
     // Async calls to the server
 
@@ -51,24 +50,52 @@ export const SearchSequence = (filters) => dispatch => {
     we would still have a then/catch clause in this
     function anyways.
         */
+    console.log(filters);
     axios['post'](G_SRCH_RSLTS_URL,filters)
     .then(function(resp){
       if(resp.status===200){
-        dispatch(updateSearchResults(status=resp.status,
-          results = resp.data));
+        dispatch(updateSearchResults({
+            status: resp.status,
+            results:resp.data
+            })
+          );
           return;
       }
       else{
-        throw {
-          "code": resp.status,
-          "message": resp
-        };
+        if(resp.status === 400){
+          this.reject({
+            "code": resp.status,
+            "message": HTTP_MSGS[`${resp.status}`]
+          })
+        }
+        else if(resp.status === 404){
+          this.reject({
+            "code": resp.status,
+            "message": HTTP_MSGS[`${resp.status}`]
+          })
+
+        }
+        else{
+          this.reject({
+            "code": resp.status,
+            "message": resp
+          });
+        }
+
       }
     })
     .catch(function(e){
       console.log(e);
-      dispatch(updateSearchResults(status=500,
-        results = [] ));
+
+      /* this makes page state rerturn undefined.
+
+      */
+      dispatch(updateSearchResults({
+          status: 500,
+          results: []
+        })
+      );
+      return;
     })
 
 
