@@ -144,7 +144,9 @@ function ResponsiveSearchBox(props) {
             <div css={css`alignment-baseline:center;flex:1;padding:5px;`}>
               {props.loading ? (<CircularProgress />) :
                 (<Button  size="large" variant="outlined" onClick={function(){
-                  props.SearchSequence() }}>
+                  // we use the statetoprops item filters
+                  // and the dispatch to props search sequence.
+                  props.SearchSequence(props.filters) }}>
 
                   Search
 

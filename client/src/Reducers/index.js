@@ -29,24 +29,30 @@ const initialState = {
 const pageState =  (state=initialState.pageState,action)=>{
   let newState    ;
   switch(action.type){
-      
+
         case FETCHING:
             newState = Object.assign({},state,{loading:true})
             return newState
         case SET_SEARCH_RESULTS:
-          if(action.status==200)
-          {
-            newState = Object.assign({},state,{loading:false})
-          }
-          else if(action.status==500)
-          {  
-            newState = Object.assign({},state,{
-          
-             loading:false,error:true,message:"No Search Results"
-          
-            })
-          }
-          return newState
+            if(action.status==200){
+              newState = Object.assign({},state,{loading:false})
+            }
+            else if(action.status==500){
+              newState = Object.assign({},state,{
+                       loading:false,error:true,message:"No Search Results"
+              });
+            }
+            //VERY IMPORATANT NEED for ELSE lmao it ok
+            else{
+              newState = {
+                ...state, // this mean populate it with initial values FIRST
+                loading: false,
+                error: true,
+                message: "error fetching"
+              }
+
+            }
+            return newState
         default:
             return state;
     }
@@ -76,12 +82,12 @@ const searchState = (state=initialState.PiazzaSearchResults,action)=>{
         case SET_SEARCH_RESULTS:
             if(action.status===500){
                 return []
-               
+
               }
 
             else if(action.status ===200){
                 return action.results
-                
+
             }
             else if(action.status===303){}
         default:
@@ -109,4 +115,3 @@ and put these selectors in them, but do not reference them here as well if you d
 export const isSearchPageLoading = (state)=>state.pageState.loading
 export const searchResults = (state) => state.pageState.searchResults
 export const SearchPageFilters = (state) => state.filterState
-
