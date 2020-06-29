@@ -1,7 +1,10 @@
 import React,{Component} from "react";
-import axios from "axios"
-import {LinearProgress } from "@material-ui/core"
+import axios from "axios";
+import { LinearProgress } from "@material-ui/core";
 
+export const Linear = () =>{
+  return LinearProgress;
+}
 
 class Networker extends Component {
   constructor(props){

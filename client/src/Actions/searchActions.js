@@ -16,7 +16,6 @@ const HTTP_MSGS ={
 }
 
 export const set_filter = (filter) =>{
-  console.log(filter);
   return {
     type:UPDATE_POST_FILTER,
     filter
@@ -51,7 +50,7 @@ export const SearchSequence = (filters) => dispatch => {
     function anyways.
         */
     console.log(filters);
-    axios['post'](G_SRCH_RSLTS_URL,filters)
+    axios['get'](G_SRCH_RSLTS_URL,{...filters} )
     .then(function(resp){
       if(resp.status===200){
         dispatch(updateSearchResults({
@@ -85,7 +84,7 @@ export const SearchSequence = (filters) => dispatch => {
       }
     })
     .catch(function(e){
-      console.log(e);
+      console.log(`\n\n\t${JSON.stringify(e)}\n`);
 
       /* this makes page state rerturn undefined.
 

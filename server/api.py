@@ -23,11 +23,17 @@ def GiveGrettings():
 def SearchCS290():
     the_filter = {}
     classid = "hardcoded"
+
+    # i dont understand why this is empty/
     print(request.args)
+
     for key,value in hardcoded.items():
         #parse the request with the hardcoded set of possible filters
-        if(request.args.get(key)):
-            the_filter[key] = request.args.get(key)
+        if(request.json and request.json.get(key)):
+            print(request.json.get(key))
+            # the_filter[key] = request.args.get(key)
+        elif(request.form and request.form.get(key)):
+            print(request.form.get(key))
     #####
     print(the_filter)
     return { "results": searchpizza(the_filter) },200
