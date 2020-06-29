@@ -18,6 +18,7 @@ we use a virutal env to create a node_modules like folder, instead of downloadin
 globally.
 
 ```bash
+cd server
 python3 -m venv venv # creates the folder where the packages are stored
 . venv/bin/activate # sources you shell enviroment
 pip install flask python-dotenv piazza-api # we need these 3 packages.
@@ -26,7 +27,6 @@ pip install flask python-dotenv piazza-api # we need these 3 packages.
 then you are ready to run it, the server is located in ~/server
 
 ```sh
-cd server
 flask run
 ```
 
