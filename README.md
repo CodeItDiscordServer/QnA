@@ -1,42 +1,37 @@
+### How to clone and install packages:
+
+To install the client directory, you download the javascript packages from npm. From the root
+of the github repo were pwd= `.../QnA/` use this shell script:
+```sh
+cd client
+npm install
+```
+to run the server
+
 ```bash
-python3 -m venv venv
-. venv/bin/activate
-pip install flask python-dotenv
+npx react-scripts start # thats the underlying package that does it, npx lets you reference things in nodemodules
+npm start # you could use the built in package.json script
+```
+
+to install the server directory, you use pip to install the LOCAL packages. 
+we use a virutal env to create a node_modules like folder, instead of downloading
+globally.
+
+```bash
+cd server
+python3 -m venv venv # creates the folder where the packages are stored
+. venv/bin/activate # sources you shell enviroment
+pip install flask python-dotenv piazza-api # we need these 3 packages.
 ```
 
 then you are ready to run it, the server is located in ~/server
 
-=======
-###Piazza QnA web application
-
-Posts on piazza are unable to be retrieved and used after the semester is over to new students.And most students wish to unsubscribe from the piazza class after the term is over. It is hard to reuse posts.
-
-In this application the python server updates and archives a class into its database, and through the web application one can find answers to their solution, these are read only, and can only be mentioned in a future piazza post for the current class.
-
-
-
-
-mostly will use the readme for the design document but after awhile it will be here and then printed to a pdf
-https://docs.google.com/document/d/1g0hEmgi6frJIARm_JjIooGh40dn9g_CjF93rX505Y8s/edit?usp=sharing
-
-
-
-### setting up the dot ev,
-the venv is in the gitignore for obvious reasons. its repeated code.
-
-
-```bash
-python3 -m venv venv
-. venv/bin/activate
-pip install flask python-dotenv
+```sh
+flask run
 ```
 
-then you are ready to run it, the server is located in ~/server
-
 =======
 
-## Specific Uses
-Piazza already exists and is great, new classes will create new piazza page. But old classes students like to move on and not get emails about inactive classes sometimes. Anyways using this piazza archive students can easily search old posts and REFERENCE them to their currently enrolled piazza class.
 
 ## Technologies:
 Flask web server allows easy access to piazza, as well as python modules.
