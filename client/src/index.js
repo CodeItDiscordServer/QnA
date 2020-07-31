@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter } from 'react-router-dom'
-<<<<<<< HEAD
-=======
 
 import { createStore,compose,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
@@ -11,7 +9,6 @@ import ThunkMiddleware from 'redux-thunk'
 import rootReducer from './Reducers/'
 
 
->>>>>>> dev
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -26,17 +23,11 @@ console.log(store);
 
 ReactDOM.render(
   <React.StrictMode>
-<<<<<<< HEAD
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-=======
   	<Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
     </Provider>
->>>>>>> dev
   </React.StrictMode>,
   document.getElementById('root'),
 
