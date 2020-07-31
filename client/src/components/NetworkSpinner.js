@@ -9,7 +9,11 @@ class Networker extends Component {
     this.state = {
       isLoading: true,
       error: false,
+<<<<<<< HEAD
+      data: false,
+=======
       data: false
+>>>>>>> dev
     }
   }
   componentDidMount(){

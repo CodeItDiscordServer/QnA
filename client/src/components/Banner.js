@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+import React from "react";
+
+
+function Banner(props){
+  return (<div>
+  WELCOME TO QNA using Piazza by Code It Discord Server
+=======
 /** @jsx jsx */
 /* @jsxFrag React.Fragment */
 
@@ -21,6 +29,7 @@ function Banner(props){
   `;
   return (<div  css={header}>
   <div css={name}>QnA</div>
+>>>>>>> dev
   </div>)
 }
 
