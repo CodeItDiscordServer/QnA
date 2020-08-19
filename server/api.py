@@ -1,6 +1,8 @@
 
 from flask import Flask,request
 from src.SearchPiazza import searchpizza
+# from flask.ext.api.parsers import JSONParser
+
 app = Flask(__name__)
 
 hardcoded={
@@ -21,19 +23,11 @@ def GiveGrettings():
 
 @app.route("/api/search",methods=["GET","POST"])
 def SearchCS290():
-    the_filter = {}
+    if(request.is_json):
+        the_filter = request.get_json()
+    else:
+        return { "code": "Invlaid MIME type"},400
+
     classid = "hardcoded"
-
-    # i dont understand why this is empty/
-    print(request.args)
-
-    for key,value in hardcoded.items():
-        #parse the request with the hardcoded set of possible filters
-        if(request.json and request.json.get(key)):
-            print(request.json.get(key))
-            # the_filter[key] = request.args.get(key)
-        elif(request.form and request.form.get(key)):
-            print(request.form.get(key))
-    #####
-    print(the_filter)
+    print(the_filter00)
     return { "results": searchpizza(the_filter) },200

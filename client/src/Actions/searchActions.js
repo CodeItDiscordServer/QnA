@@ -49,8 +49,18 @@ export const SearchSequence = (filters) => dispatch => {
     we would still have a then/catch clause in this
     function anyways.
         */
-    console.log(filters);
-    axios['get'](G_SRCH_RSLTS_URL,{...filters} )
+
+    //POST is the only way to change teh content type to application/json,
+    // however we might be able to do a get, if we url encode the search.
+    // i think axios made it a design paradim that you cant send a request
+    // body with a get.
+    axios['post'](G_SRCH_RSLTS_URL,
+      JSON.stringify(filters),
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+        }
+      })
     .then(function(resp){
       if(resp.status===200){
         dispatch(updateSearchResults({

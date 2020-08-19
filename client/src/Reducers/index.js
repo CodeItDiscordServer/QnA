@@ -12,13 +12,22 @@ const tags_hardcoded={
     "hw2": false,
     "hw3": false,
     "hw4": false
+
   };
+const folders_hardcoded = {
+  "hw1": false,
+  "hw2": false,
+  "hw3": false,
+  "hw4": false
+
+}
+// folders: folders_hardcoded,
 
 const initialState = {
   PiazzaSearchResults : [],
     filterState:{
         searchText: "",
-        tags:tags_hardcoded
+        tags:tags_hardcoded,
     },
 
     pageState:{
