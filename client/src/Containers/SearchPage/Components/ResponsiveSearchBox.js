@@ -112,6 +112,14 @@ function ResponsiveSearchBox(props) {
       });
       return;
     }
+
+    const updateFolders = (folders)=>{
+      props.updateFilter({
+        ...props.filters,
+        folders
+      })
+      return;
+    }
   return (
     <div css={css`width: auto;`}>
     {!hamShow && <div css={hamburgerIcons} onClick={()=>toggleBurger(!hamShow)}>
@@ -157,7 +165,8 @@ function ResponsiveSearchBox(props) {
             <h3 css={css`font-weight:400;font-size:20px;`}>Tags </h3>
               <div id="tags-list" css={tags_contaier}>
               {/* the list of true/false filters, the checkbox will be used, but not applied yet.
-                the filter is saved in the site memory with other filters.*/}
+                the filter is saved in the site memory with other filters.
+                */}
                     {Object.keys(props.filters.tags).map(function(key){
                       return (<div key={`tag-check-${key}`} className="check-container" css={navItem}>
                          <input type="checkbox" id={`tag-${key}`}
@@ -175,6 +184,28 @@ function ResponsiveSearchBox(props) {
                        </div>)
                     })}
                     </div>
+              {/*<h3 css={css`font-weight:400;font-size:20px;`}>Folders </h3>
+                <div id="tags-list" css={tags_contaier}>
+                {/* the list of true/false filters, the checkbox will be used, but not applied yet.
+                  the filter is saved in the site memory with other filters.
+                      {Object.keys(props.filters.folders).map(function(key){
+                        return (<div key={`folder-check-${key}`} className="check-container" css={navItem}>
+                           <input type="checkbox" id={`folder-${key}`}
+                            checked={props.filters.folders[key]}
+                            onChange={function(){
+
+                            let newTags = props.filters.folders;
+                             newTags[key] = !newTags[key];
+                             // Called Action to change tags
+                             updateFolders(newTags)
+
+                            }} />
+                           <label htmlFor={`folder-${key}`}></label>
+                           <div className="tag">{key}</div>
+                         </div>)
+                      })}
+                      </div>
+                      */}
               <div>
 
               </div>

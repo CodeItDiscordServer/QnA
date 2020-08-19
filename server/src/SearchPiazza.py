@@ -31,7 +31,7 @@ hardcoded={
 wants=[]
 
 
-# uses filter 
+# uses filter
 
 #somehow the filter needs to be able to check all of them.
 # for instance, the filte could require both student and instructor answer or none of them.
@@ -59,7 +59,7 @@ def filterPost(post,filter):
         # these need to be all set to true
         if(not value):
             print(key,value)
-            return 0
+            return False
     return True
 
 
@@ -67,12 +67,13 @@ def filterPost(post,filter):
 
 def searchpizza(filter_src):
     cs290 = p.network(credents["classID"])
-    posts = cs290.iter_all_posts(limit=15)
+    posts = cs290.iter_all_posts(limit=1)
     wants = []
+
     for post in posts:
+        # print(post)
         if(filterPost(post,hardcoded)):
             wants.append(post)
-            print("appended")
 
     return wants
 
@@ -89,7 +90,7 @@ __exports__ = exports
     ## the current first 5 items are lame instructors notes lol
     ###
         #print(post["history"][0]["content"])
-        # here i imagine we can do a percentage search where 
+        # here i imagine we can do a percentage search where
         ## we seperate the box into words and test each word, and then show
         # the most relevant first
         # question, active, seen statsprint(post["type"],post["status"],post["config"])
