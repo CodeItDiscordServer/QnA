@@ -5,9 +5,12 @@ import {FETCHING,
 
 const SEARCH_URL = "/api/search";
 
+const misc = {
+  "Instructor has answered": false,
+  "Student has answered": false,
+}
+
 const tags_hardcoded={
-    "Instructor has answered": false,
-    "Student has answered": false,
     "hw1": false,
     "hw2": false,
     "hw3": false,
@@ -26,6 +29,7 @@ const folders_hardcoded = {
 const initialState = {
   PiazzaSearchResults : [],
     filterState:{
+        ...misc,
         searchText: "",
         tags:tags_hardcoded,
     },

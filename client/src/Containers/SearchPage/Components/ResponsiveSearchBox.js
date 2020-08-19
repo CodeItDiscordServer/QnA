@@ -113,11 +113,13 @@ function ResponsiveSearchBox(props) {
       return;
     }
 
-    const updateFolders = (folders)=>{
-      props.updateFilter({
-        ...props.filters,
-        folders
-      })
+    const updateMisc = (key,value)=>{
+      // misc items are held at the top level of the search
+      let obj = {
+        ...props.filters
+      }
+      obj[key] = value;
+      props.updateFilter(obj)
       return;
     }
   return (
@@ -161,6 +163,41 @@ function ResponsiveSearchBox(props) {
                 </Button>)}
                 </div>
                 </div>
+              <div id="misc-container" css={tags_contaier}>
+
+                <div key={`Instructor has answered`} className="check-container" css={navItem}>
+                   <input type="checkbox" id={`Instructor has answered`}
+                    checked={props.filters["Instructor has answered"]}
+                    onChange={function(){
+
+                     updateMisc("Instructor has answered",!props.filters["Instructor has answered"])
+
+                    }} />
+                   <label htmlFor={`Instructor has answered`}></label>
+                   <div onClick={function(){
+
+                    // Called Action to change tags
+                    updateMisc("Student has answered",!props.filters["Student has answered"])
+                   }}className="tag">{"Instructor has answered"}</div>
+                 </div>
+
+                 <div key={`Student has answered`} className="check-container" css={navItem}>
+                    <input type="checkbox" id={`Student has answered`}
+                     checked={props.filters["Student has answered"]}
+                     onChange={function(){
+
+                      // Called Action to change tags
+                      updateMisc("Student has answered",!props.filters["Student has answered"])
+                     }} />
+                    <label htmlFor={`Student has answered`}></label>
+                    <div onClick={function(){
+
+                     // Called Action to change tags
+                     updateMisc("Student has answered",!props.filters["Student has answered"])
+                    }}
+                    className="tag">{"Student has answered"}</div>
+                  </div>
+              </div>
 
             <h3 css={css`font-weight:400;font-size:20px;`}>Tags </h3>
               <div id="tags-list" css={tags_contaier}>
@@ -180,7 +217,15 @@ function ResponsiveSearchBox(props) {
 
                           }} />
                          <label htmlFor={`tag-${key}`}></label>
-                         <div className="tag">{key}</div>
+                         <div onClick={function(){
+
+                         let newTags = props.filters.tags;
+                          newTags[key] = !newTags[key];
+                          // Called Action to change tags
+                          updateTags(newTags)
+
+                         }}
+                         className="tag">{key}</div>
                        </div>)
                     })}
                     </div>

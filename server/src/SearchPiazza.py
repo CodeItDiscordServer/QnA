@@ -37,18 +37,25 @@ wants=[]
 # for instance, the filte could require both student and instructor answer or none of them.
 def filterPost(post,filter):
     # question filters
-    postDesc = {}
-    for key,value in filter.items():
+    postDesc = {
+    "tags":{}
+    }
+    if(filter["searchText"]):
+        postDesc["searchText"] = filter["searchText"]
+    for key,value in filter["tags"].items():
         if(value):
             # these need to be all set to true inside this function
-            postDesc[key] = 0
+            postDesc["tags"][key] = 0
+        # else:
+        #     filter["tags"][key] = -1
+    print(filter)
 # here ^^ i set up the requirements of the filter
 ##########################################
     postDesc["limit"] = 1
 
     #folowup filters
     for fallup in post["children"]:
-        if(filter["i-answered"] and fallup['type'] == 'i_answer'):
+        if(filter["tags"]["i-answered"] and fallup['type'] == 'i_answer'):
             postDesc["i-answered"] = 1
         if(filter["s-answered"] and fallup['type'] == 's_answer'):
             postDesc["s-answered"] = 1
@@ -67,16 +74,17 @@ def filterPost(post,filter):
 
 def searchpizza(filter_src):
     cs290 = p.network(credents["classID"])
-    posts = cs290.iter_all_posts(limit=1)
+    posts = cs290.iter_all_posts(limit=20)
     wants = []
 
     for post in posts:
-        # print(post)
-        if(filterPost(post,hardcoded)):
-            wants.append(post)
-
+        wants.append(post)
+        # if(filterPost(post,filter_src)):
+        #     wants.append(post)
+    print(wants[13])
     return wants
 
+searchpizza({})
 exports = {"searchpizza":searchpizza}
 
 __exports__ = exports
