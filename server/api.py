@@ -29,5 +29,5 @@ def SearchCS290():
         return { "code": "Invlaid MIME type"},400
 
     classid = "hardcoded"
-    print(the_filter00)
+    print(the_filter)
     return { "results": searchpizza(the_filter) },200
