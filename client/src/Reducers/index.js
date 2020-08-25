@@ -1,9 +1,9 @@
 import { combineReducers} from "redux"
 import {FETCHING,
-  SET_SEARCH_RESULTS,SEARCH,
+  SET_SEARCH_RESULTS,
   UPDATE_POST_FILTER,UPDATE_CLASS_ID} from '../ActionTypes/ActionTypes'
 
-const SEARCH_URL = "/api/search";
+
 
 const misc = {
   "Instructor has answered": false,
@@ -17,13 +17,13 @@ const tags_hardcoded={
     "hw4": false
 
   };
-const folders_hardcoded = {
-  "hw1": false,
-  "hw2": false,
-  "hw3": false,
-  "hw4": false
-
-}
+// const folders_hardcoded = {
+//   "hw1": false,
+//   "hw2": false,
+//   "hw3": false,
+//   "hw4": false
+//
+// }
 // folders: folders_hardcoded,
 
 const initialState = {
@@ -48,13 +48,13 @@ const pageState =  (state=initialState.pageState,action)=>{
             newState = Object.assign({},state,{loading:true})
             return newState
         case SET_SEARCH_RESULTS:
-            if(action.status==200){
+            if(action.status===200){
               newState = Object.assign({},state,{             ...state,
                 loading: false,
                 searchResults: action.results
               })
             }
-            else if(action.status==500){
+            else if(action.status===500){
               newState = Object.assign({},state,{
                        loading:false,error:true,message:"No Search Results"
               });
@@ -107,6 +107,7 @@ const searchState = (state=initialState.PiazzaSearchResults,action)=>{
 
             }
             else if(action.status===303){}
+            break;
         default:
             return state
     }

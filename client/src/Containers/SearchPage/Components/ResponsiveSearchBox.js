@@ -352,7 +352,7 @@ input[type="checkbox"]{
 
 
 
-{/* <div css={tags_contaier}>
+/* <div css={tags_contaier}>
             <div className="check-container" css={navItem}>
                <input type="checkbox" id="instructor-answered" value={chcks.i_answer}
                onChange={function(){
@@ -376,4 +376,4 @@ input[type="checkbox"]{
                 <div className="tag">Student has answered</div>
               </div>
 
-            </div > */}
+            </div > */
