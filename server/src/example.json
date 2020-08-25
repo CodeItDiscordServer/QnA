@@ -37,35 +37,6 @@
       "children": [],
       "created": "2020-06-07T17:08:54Z",
       "bucket_order": 3,
-      "tag_endorse": [
-        {
-          "role": "ta",
-          "name": "Quan Nguyen",
-          "endorser": {},
-          "admin": True,
-          "photo": None,
-          "id": "k0s2plhv4ov1a0",
-          "photo_url": None,
-          "published": True,
-          "email": "nguyenq2@oregonstate.edu",
-          "us": False,
-          "admin_permission": 5,
-          "facebook_id": None
-        },
-        {
-          "role": "student",
-          "name": "Yuning Gao",
-          "endorser": {},
-          "admin": False,
-          "photo": "1586311440_200.jpg",
-          "id": "ixtha1ued751eg",
-          "photo_url": "https://d1b10bmlvqabco.cloudfront.net/photos/ixtha1ued751eg/1586311440_200.jpg",
-          "published": True,
-          "email": "gaoyu@oregonstate.edu",
-          "us": False,
-          "facebook_id": None
-        }
-      ],
       "bucket_name": "Today",
       "id": "kb5bmacnmg04ky",
       "history": [
@@ -117,15 +88,7 @@
           "subject": "",
           "created": "2020-06-07T19:55:05Z",
           "content": "<p>I found this post, seems useful: <a href=\"https://stackoverflow.com/questions/4634644/how-to-include-js-file-in-another-js-file\">https://stackoverflow.com/questions/4634644/how-to-include-js-file-in-another-js-file</a></p>\n<p></p>\n<p>And, you should split up your css files for readability and maintainability.\xa0</p>\n<p>For example, you have style.css as the main css file, then page1.css, page2.css and page3.css</p>\n<p>In your style.css, you can set global properties that will apply to all css files, like font-family, font color, a tag properties, a:hover, nav bar, etc.</p>\n<p>In pageX.css, you set some specific properties that will apply to only that page.</p>\n<p>Then you can include them in style.css like this:</p>\n<p></p>\n<pre>\n@import &#39;page1.css&#39;\n@import &#39;page2.css&#39;\n@import &#39;page3.css&#39;</pre>\n<p>That way, in your index.html, you only need to include style.css in the head section</p>"
-        },
-        {
-          "anon": "no",
-          "uid": "k0s2plhv4ov1a0",
-          "subject": "",
-          "created": "2020-06-07T19:54:48Z",
-          "content": "<p>I found this post, seem useful: <a href=\"https://stackoverflow.com/questions/4634644/how-to-include-js-file-in-another-js-file\">https://stackoverflow.com/questions/4634644/how-to-include-js-file-in-another-js-file</a></p>\n<p></p>\n<p>And, you should split up your css files for readability and maintainability.\xa0</p>\n<p>For example, you have style.css as the main css file, then page1.css, page2.css and page3.css</p>\n<p>In your style.css, you can set global properties that will apply to all css files, like font-family, font color, a tag properties, a:hover, nav bar, etc.</p>\n<p>In pageX.css, you set some specific properties that will apply to only that page.</p>\n<p>Then you can include them in style.css like this:</p>\n<p></p>\n<pre>\n@import &#39;page1.css&#39;\n@import &#39;page2.css&#39;\n@import &#39;page3.css&#39;</pre>\n<p>That way, in your index.html, you only need to include style.css in the head section</p>"
-        }
-      ],
+        }],
       "type": "i_answer",
       "tag_endorse_arr": ["ixtha1ued751eg"],
       "config": {},

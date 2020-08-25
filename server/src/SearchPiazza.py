@@ -38,31 +38,42 @@ wants=[]
 def filterPost(post,filter):
     # question filters
     postDesc = {
-    "tags":{}
+     "tags": {}
     }
     if(filter["searchText"]):
-        postDesc["searchText"] = filter["searchText"]
+        postDesc["searchText"] = filter["searchText"].split(" ")# split it up in words
+    for key,value in filter.items():
+        if(key == "tags"):
+            continue
+        if(value):
+            # these need to be all set to true inside this function
+            postDesc[key] = 0
     for key,value in filter["tags"].items():
         if(value):
             # these need to be all set to true inside this function
             postDesc["tags"][key] = 0
-        # else:
-        #     filter["tags"][key] = -1
-    print(filter)
 # here ^^ i set up the requirements of the filter
 ##########################################
-    postDesc["limit"] = 1
+    # postDesc["limit"] = 1
 
     #folowup filters
-    for fallup in post["children"]:
-        if(filter["tags"]["i-answered"] and fallup['type'] == 'i_answer'):
-            postDesc["i-answered"] = 1
-        if(filter["s-answered"] and fallup['type'] == 's_answer'):
-            postDesc["s-answered"] = 1
+    for followup in post["children"]:
+        if(filter["Instructor has answered"] and followup['type'] == 'i_answer'):
+            postDesc["Instructor has answered"] = 1
+        if(filter["Student has answered"] and followup['type'] == 's_answer'):
+            postDesc["Student has answered"] = 1
+
 
 ###########################################
 # then i check if each requirmements were filled.
     for key,value in postDesc.items():
+        # these need to be all set to true
+        if(key=="tags"):
+            continue
+        if(not value):
+            print(key,value)
+            return False
+    for key,value in postDesc["tags"].items():
         # these need to be all set to true
         if(not value):
             print(key,value)
@@ -78,38 +89,10 @@ def searchpizza(filter_src):
     wants = []
 
     for post in posts:
-        wants.append(post)
-        # if(filterPost(post,filter_src)):
-        #     wants.append(post)
-    print(wants[13])
+        if(filterPost(post,filter_src)):
+            wants.append(post)
     return wants
 
-searchpizza({})
 exports = {"searchpizza":searchpizza}
 
 __exports__ = exports
-
-
-    ## all this other crap is scratch
-#### end for loop
-
-
-
-    ## the current first 5 items are lame instructors notes lol
-    ###
-        #print(post["history"][0]["content"])
-        # here i imagine we can do a percentage search where
-        ## we seperate the box into words and test each word, and then show
-        # the most relevant first
-        # question, active, seen statsprint(post["type"],post["status"],post["config"])
-        #print(post["children"])
-    #print("/ **** CHILDREN ****/")
-    #for resp in post["children"]
-       # print("type of child?",resp['type'])
-        #print("i_answer == type?",resp['type'],resp['type']=='i_answer')
-        #if(resp['type'] == 'i_answer'):
-         #   print('append post')
-         #   break
-
-        #print(post["children"][0]['type']) #i_answer means instructor answer
-        ##print(post["children"][0]['subject'])
