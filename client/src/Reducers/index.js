@@ -35,12 +35,13 @@ const initialState = {
     },
 
     pageState:{
-        loading:false
+        loading:false,
+        searchResults: null
     }
 }
 
 const pageState =  (state=initialState.pageState,action)=>{
-  let newState    ;
+  let newState;
   switch(action.type){
 
         case FETCHING:
@@ -48,7 +49,10 @@ const pageState =  (state=initialState.pageState,action)=>{
             return newState
         case SET_SEARCH_RESULTS:
             if(action.status==200){
-              newState = Object.assign({},state,{loading:false})
+              newState = Object.assign({},state,{             ...state,
+                loading: false,
+                searchResults: action.results
+              })
             }
             else if(action.status==500){
               newState = Object.assign({},state,{

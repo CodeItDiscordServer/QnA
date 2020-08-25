@@ -63,11 +63,7 @@ export const SearchSequence = (filters) => dispatch => {
       })
     .then(function(resp){
       if(resp.status===200){
-        dispatch(updateSearchResults({
-            status: resp.status,
-            results:resp.data
-            })
-          );
+        dispatch(updateSearchResults(resp.status,resp.data.results));
           return;
       }
       else{

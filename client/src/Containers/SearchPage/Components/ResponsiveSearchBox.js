@@ -165,7 +165,7 @@ function ResponsiveSearchBox(props) {
                 </div>
               <div id="misc-container" css={tags_contaier}>
 
-                <div key={`Instructor has answered`} className="check-container" css={navItem}>
+                <div style={{cursor:"pointer"}} key={`Instructor has answered`} className="check-container" css={navItem}>
                    <input type="checkbox" id={`Instructor has answered`}
                     checked={props.filters["Instructor has answered"]}
                     onChange={function(){
@@ -177,11 +177,11 @@ function ResponsiveSearchBox(props) {
                    <div onClick={function(){
 
                     // Called Action to change tags
-                    updateMisc("Student has answered",!props.filters["Student has answered"])
+                    updateMisc("Instructor has answered",!props.filters["Instructor has answered"])
                    }}className="tag">{"Instructor has answered"}</div>
                  </div>
 
-                 <div key={`Student has answered`} className="check-container" css={navItem}>
+                 <div style={{cursor:"pointer"}} key={`Student has answered`} className="check-container" css={navItem}>
                     <input type="checkbox" id={`Student has answered`}
                      checked={props.filters["Student has answered"]}
                      onChange={function(){
@@ -205,7 +205,7 @@ function ResponsiveSearchBox(props) {
                 the filter is saved in the site memory with other filters.
                 */}
                     {Object.keys(props.filters.tags).map(function(key){
-                      return (<div key={`tag-check-${key}`} className="check-container" css={navItem}>
+                      return (<div style={{cursor:"pointer"}} key={`tag-check-${key}`} className="check-container" css={navItem}>
                          <input type="checkbox" id={`tag-${key}`}
                           checked={props.filters.tags[key]}
                           onChange={function(){
