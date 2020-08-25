@@ -10,8 +10,6 @@ import {isSearchPageLoading,SearchPageFilters} from '../../../Reducers/index.js'
 
 
 
-const SEARCH_URL = "/api/search";
-// BagOfThreads: state.search.results,
 
 const stateToProps = state =>({
   isLoading: isSearchPageLoading(state),
