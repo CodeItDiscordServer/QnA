@@ -95,10 +95,7 @@ export const SearchSequence = (filters) => dispatch => {
       /* this makes page state rerturn undefined.
 
       */
-      dispatch(updateSearchResults({
-          status: 500,
-          results: []
-        })
+      dispatch(updateSearchResults(500,[])
       );
       return;
     })

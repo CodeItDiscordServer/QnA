@@ -40,28 +40,65 @@ def filterPost(post,filter):
     postDesc = {
      "tags": {}
     }
-    if(filter["searchText"]):
+######################
+# First we create the filter object in the client side,
+# creating keys for every filter filled in in the form.
+#create a map to classify percentages..
+    if(filter['searchText']):
         postDesc["searchText"] = filter["searchText"].split(" ")# split it up in words
+        postDesc["searchText"] = set(postDesc["searchText"])
+        postDesc["searchText"] = (list(postDesc["searchText"])) #guarentee only unique search filter
+        postDesc["searchHits"] = {}
+        for word in postDesc["searchText"]:
+            postDesc["searchHits"][word] = 0
+
     for key,value in filter.items():
-        if(key == "tags"):
-            continue
+        if(key == "tags" or key =="searchText"):
+            continue #skip this  key, we do not want to set its value to 0
         if(value):
-            # these need to be all set to true inside this function
+            # these need to be all set to true inside this function to be considered
+            #related post.
             postDesc[key] = 0
     for key,value in filter["tags"].items():
         if(value):
-            # these need to be all set to true inside this function
             postDesc["tags"][key] = 0
-# here ^^ i set up the requirements of the filter
+# if a form input wasnt used, then we wont use it in the filter.
 ##########################################
-    # postDesc["limit"] = 1
+    #every tag needs to be present.
+    for key,value in postDesc["tags"].items():
+        if(key in post["folders"]):
+            postDesc["tags"][key] = 1
 
+    try:
+    # hardest, the text content filter which might be percentage based.
+        for word in postDesc["searchText"]:
+            if(word in post["history"][0]["content"]):
+                postDesc["searchHits"][word]+=1
+            if(word in post["history"][0]["subject"]):
+                postDesc["searchHits"][word]+=1
+    except(KeyError):
+        # there was no search search
+        pass
+#
     #folowup filters
     for followup in post["children"]:
+        try:
+            for word in postDesc["searchText"]:
+                try:
+                    if(word in followup["history"][0]["content"]):
+                            postDesc["searchHits"][word]+=1
+                except(KeyError):
+                    if(word in followup["subject"]):
+                            postDesc["searchHits"][word]+=1
+        except(KeyError):
+            pass
+
         if(filter["Instructor has answered"] and followup['type'] == 'i_answer'):
             postDesc["Instructor has answered"] = 1
         if(filter["Student has answered"] and followup['type'] == 's_answer'):
             postDesc["Student has answered"] = 1
+
+    #and finally the
 
 
 ###########################################
@@ -71,14 +108,21 @@ def filterPost(post,filter):
         if(key=="tags"):
             continue
         if(not value):
-            print(key,value)
             return False
     for key,value in postDesc["tags"].items():
         # these need to be all set to true
         if(not value):
-            print(key,value)
             return False
-    return True
+
+    if(postDesc["searchText"]):
+        for key,value in postDesc["searchHits"].items():
+            if value > 0:
+                return postDesc["searchHits"] # return the mapping of search hits
+        # if all of them dont show up this post is not needed.
+        return False # not a single search text filter was found
+    #no further check return true
+    else:
+        return 1
 
 
 
@@ -89,9 +133,12 @@ def searchpizza(filter_src):
     wants = []
 
     for post in posts:
-        if(filterPost(post,filter_src)):
+        res=filterPost(post,filter_src)
+        if(res):
+            print(res)
             wants.append(post)
     return wants
+
 
 exports = {"searchpizza":searchpizza}
 
