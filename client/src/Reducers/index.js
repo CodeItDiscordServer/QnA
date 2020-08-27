@@ -98,15 +98,17 @@ const searchState = (state=initialState.PiazzaSearchResults,action)=>{
     switch(action.type){
         case SET_SEARCH_RESULTS:
             if(action.status===500){
-                return []
-
+                return state
               }
-
             else if(action.status ===200){
-                return action.results
-
+                return {
+                ...state,
+                results: action.results
+              }
             }
-            else if(action.status===303){}
+            else if(action.status===303){
+               return state
+            }
             break;
         default:
             return state
