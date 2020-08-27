@@ -1,118 +1,55 @@
 {
-  "folders": ["project"],
-  "nr": 270,
-  "data": { "embed_links": [] },
-  "created": "2020-06-07T08:28:53Z",
-  "bucket_order": 3,
-  "no_answer_followup": 0,
-  "bucket_name": "Today",
-  "history": [
-    {
-      "anon": "no",
-      "uid": "ixtha1ued751eg",
-      "subject": "One js file for multiple webpages or one js file for each webpage?",
-      "created": "2020-06-07T08:28:53Z",
-      "content": "Hi my team decided to create a website that contains several pages, the layout would be relatively simple and so does the functions of each page. I used to put all the styling in the same CSS file, but I&#39;m not sure if I use one js file to handle  the interaction from different pages, or should I create separate js file for the different webpages?"
-    }
-  ],
-  "type": "question",
-  "anon_map": {},
-  "tags": ["project", "student"],
+  "anon": "full",
+  "folders": [],
+  "data": None,
+  "no_upvotes": 0,
+  "subject": "<p>I am still having the same issue. I deleted the twitTemplate.js file that is created by &#39;build&#39; as well as deleting index.js and re-adding it. I don&#39;t have any HTML files within my code either.\xa0</p>",
+  "created": "2020-05-29T16:14:10Z",
+  "bucket_order": 6,
+  "bucket_name": "Last week",
+  "type": "followup",
   "tag_good": [],
-  "unique_views": 60,
+  "uid_a": "a_0",
   "children": [
     {
+      "anon": "no",
       "folders": [],
-      "data": { "embed_links": [] },
+      "data": None,
+      "subject": "<p>You don&#39;t need to delete the twitTemplate.js file.</p>\n<div>You only need to remove the duplicate statement that including the index.js script in your main.handlebars</div>\n<div></div>",
+      "created": "2020-05-29T17:50:25Z",
+      "bucket_order": 6,
+      "bucket_name": "Last week",
+      "type": "feedback",
+      "tag_good": [],
+      "uid": "k0s2plhv4ov1a0",
       "children": [],
-      "created": "2020-06-07T17:08:54Z",
-      "bucket_order": 3,
-      "bucket_name": "Today",
-      "id": "kb5bmacnmg04ky",
-      "history": [
-        {
-          "anon": "no",
-          "uid": "k0yinknjuqs3uw",
-          "subject": "",
-          "created": "2020-06-07T17:09:06Z",
-          "content": "<p>It would probably be a good idea to separate the
-          JS files for the different webpage, especially if that JS code
-          is only used on one of the many pages. This is good not only
-          for modularity but also if there&#39;s a logical error you don&#39;t
-           have to go through like 1000 lines of code, just the lines of code that
-            that specific page uses.</p>"
-        },
-      ],
-      "type": "s_answer",
-      "tag_endorse_arr": ["k0s2plhv4ov1a0", "ixtha1ued751eg"],
-      "config": {},
-      "is_tag_endorse": False
+      "tag_good_arr": [],
+      "id": "kasi50taxoslp",
+      "updated": "2020-05-29T17:50:25Z",
+      "config": {}
     },
     {
+      "anon": "no",
       "folders": [],
-      "data": { "embed_links": [] },
+      "data": None,
+      "subject": "<p></p>",
+      "created": "2020-06-02T21:44:44Z",
+      "bucket_order": 4,
+      "bucket_name": "Yesterday",
+      "type": "feedback",
+      "tag_good": [],
+      "uid": "jqmrwfwr7xj7mj",
       "children": [],
-      "created": "2020-06-07T19:54:48Z",
-      "bucket_order": 3,
-      "tag_endorse": [
-        {
-          "role": "student",
-          "name": "Yuning Gao",
-          "endorser": {},
-          "admin": False,
-          "photo": "1586311440_200.jpg",
-          "id": "ixtha1ued751eg",
-          "photo_url": "https://d1b10bmlvqabco.cloudfront.net/photos/ixtha1ued751eg/1586311440_200.jpg",
-          "published": True,
-          "email": "gaoyu@oregonstate.edu",
-          "us": False,
-          "facebook_id": None
-        }
-      ],
-      "bucket_name": "Today",
-      "id": "kb5hjn7kuvf30p",
-      "history": [
-        {
-          "anon": "no",
-          "uid": "k0s2plhv4ov1a0",
-          "subject": "",
-          "created": "2020-06-07T19:55:05Z",
-          "content": "<p>I found this post, seems useful: <a href=\"https://stackoverflow.com/questions/4634644/how-to-include-js-file-in-another-js-file\">https://stackoverflow.com/questions/4634644/how-to-include-js-file-in-another-js-file</a></p>\n<p></p>\n<p>And, you should split up your css files for readability and maintainability.\xa0</p>\n<p>For example, you have style.css as the main css file, then page1.css, page2.css and page3.css</p>\n<p>In your style.css, you can set global properties that will apply to all css files, like font-family, font color, a tag properties, a:hover, nav bar, etc.</p>\n<p>In pageX.css, you set some specific properties that will apply to only that page.</p>\n<p>Then you can include them in style.css like this:</p>\n<p></p>\n<pre>\n@import &#39;page1.css&#39;\n@import &#39;page2.css&#39;\n@import &#39;page3.css&#39;</pre>\n<p>That way, in your index.html, you only need to include style.css in the head section</p>"
-        }],
-      "type": "i_answer",
-      "tag_endorse_arr": ["ixtha1ued751eg"],
-      "config": {},
-      "is_tag_endorse": False
+      "tag_good_arr": [],
+      "id": "kayg9rnofgi7ds",
+      "d-bucket": "Yesterday",
+      "updated": "2020-06-02T21:44:44Z",
+      "config": {}
     }
   ],
   "tag_good_arr": [],
-  "no_answer": 0,
-  "anon_icons": True,
-  "id": "kb4t1jro3xz5gk",
-  "config": {
-    "seen": {
-      "44": 6,
-      "121": 3,
-      "123": 7,
-      "69": 5,
-      "135": 4,
-      "201": 2,
-      "258": 1,
-      "139": 0,
-      "175": 8
-    }
-  },
-  "status": "active",
-  "request_instructor": 0,
-  "request_instructor_me": False,
-  "bookmarked": 4,
-  "num_favorites": 0,
-  "my_favorite": False,
-  "is_bookmarked": False,
-  "is_tag_good": False,
-  "q_edits": [],
-  "i_edits": [],
-  "s_edits": [],
-  "t": 1597804143719,
-  "default_anonymity": "no"
+  "no_answer": 1,
+  "id": "kasep8jt5tc4cx",
+  "updated": "2020-05-29T16:14:10Z",
+  "config": {}
 }

@@ -114,22 +114,21 @@ def filterPost(post,filter):
         if(not value):
             return False
 
-    if(postDesc["searchText"]):
+    try:
         for key,value in postDesc["searchHits"].items():
             if value > 0:
                 return postDesc["searchHits"] # return the mapping of search hits
         # if all of them dont show up this post is not needed.
         return False # not a single search text filter was found
-    #no further check return true
-    else:
+    except(KeyError):
+        # there is no search text, and this raises key erorr
         return 1
-
 
 
 
 def searchpizza(filter_src):
     cs290 = p.network(credents["classID"])
-    posts = cs290.iter_all_posts(limit=20)
+    posts = cs290.iter_all_posts(limit=100) # no limit
     wants = []
 
     for post in posts:
