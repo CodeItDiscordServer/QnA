@@ -23,8 +23,8 @@ def GiveGrettings():
 def SearchCS290():
     the_filter = {}
     classid = "hardcoded"
-    print('hello')
-    for key,value in hardcoded.items():
+    print('search/',request.json)
+    for key in hardcoded.items():
         #parse the request with the hardcoded set of possible filters
         if(request.args.get(key)):
             the_filter[key] = request.args.get(key)
