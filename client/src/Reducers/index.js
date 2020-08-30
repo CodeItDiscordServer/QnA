@@ -133,5 +133,5 @@ two different files, just one file, you could create another file
 and put these selectors in them, but do not reference them here as well if you do {
 */
 export const isSearchPageLoading = (state)=>state.pageState.loading
-export const searchResults = (state) => state.pageState.searchResults
+export const searchResults = (state) => state.searchState.results
 export const SearchPageFilters = (state) => state.filterState

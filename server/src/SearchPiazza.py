@@ -128,7 +128,7 @@ def filterPost(post,filter):
 
 def searchpizza(filter_src):
     cs290 = p.network(credents["classID"])
-    posts = cs290.iter_all_posts(limit=100) # no limit
+    posts = cs290.iter_all_posts(limit=10) # no limit
     wants = []
 
     for post in posts:

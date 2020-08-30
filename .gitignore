@@ -3,3 +3,5 @@ server/venv
 server/__pycache__/
 server/src/__pycache__/
 client/node_modules
+.env
+.vscode
