@@ -50,7 +50,7 @@ def filterPost(post,filter):
         postDesc["searchText"] = (list(postDesc["searchText"])) #guarentee only unique search filter
         postDesc["searchHits"] = {}
         for word in postDesc["searchText"]:
-            postDesc["searchHits"][word] = 0
+            postDesc["searchHits"][word] = []
 
     for key,value in filter.items():
         if(key == "tags" or key =="searchText"):
@@ -73,23 +73,25 @@ def filterPost(post,filter):
     # hardest, the text content filter which might be percentage based.
         for word in postDesc["searchText"]:
             if(word in post["history"][0]["content"]):
-                postDesc["searchHits"][word]+=1
+                postDesc["searchHits"][word].append(getShortLists(post["history"][0]["content"],word))
             if(word in post["history"][0]["subject"]):
-                postDesc["searchHits"][word]+=1
+                postDesc["searchHits"][word].append(getShortLists(post["history"][0]["subject"],word))
     except(KeyError):
         # there was no search search
+        print("no hitory?",post)
         pass
 #
     #folowup filters
     for followup in post["children"]:
         try:
             for word in postDesc["searchText"]:
+                # if the post was never edited its just as "subject"
                 try:
                     if(word in followup["history"][0]["content"]):
-                            postDesc["searchHits"][word]+=1
+                            postDesc["searchHits"][word].append(getShortLists(followup["history"][0]["content"],word))
                 except(KeyError):
                     if(word in followup["subject"]):
-                            postDesc["searchHits"][word]+=1
+                            postDesc["searchHits"][word].append(getShortLists(followup["subject"],word))
         except(KeyError):
             pass
 
@@ -116,7 +118,7 @@ def filterPost(post,filter):
 
     try:
         for key,value in postDesc["searchHits"].items():
-            if value > 0:
+            if len(value):
                 return postDesc["searchHits"] # return the mapping of search hits
         # if all of them dont show up this post is not needed.
         return False # not a single search text filter was found
@@ -125,16 +127,44 @@ def filterPost(post,filter):
         return 1
 
 
+#####
+# This creates short summarys of a large paragraph of text, focusing on
+# little bits surrounding the search terms,  good for skimming.
+#####
+def getShortLists(text,searchTerm):
+    RELEVANCE = 50
+    text = text.lower()
+    textlen=  len(text)
+    searchTerm = searchTerm.lower()
+    summaries=[]
+    while(1):
+
+        try:
+            spot = text.index(searchTerm)
+            # have to make sure we returned a split string of correct dimensions
+            summaries.append(text[max(0,spot-RELEVANCE):min(textlen,spot+RELEVANCE+len(searchTerm))])
+            #basicall means    text[little bit to the left: little bit to the right]
+            #  and does this for all instances of the search term in the text
+
+
+            #VERY IMPORTANT, update the text cursor object
+            text = text[min(spot+len(searchTerm)+RELEVANCE,textlen):]
+        except(ValueError):
+             break
+
+    return summaries
+
 
 def searchpizza(filter_src):
     cs290 = p.network(credents["classID"])
-    posts = cs290.iter_all_posts(limit=10) # no limit
+    posts = cs290.iter_all_posts(limit=25) # no limit
     wants = []
 
     for post in posts:
         res=filterPost(post,filter_src)
         if(res):
-            print(res)
+            if(res != 1):
+                post["summariez"] = res
             wants.append(post)
     return wants
 
