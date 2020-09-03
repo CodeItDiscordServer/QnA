@@ -16,9 +16,15 @@ import * as serviceWorker from './serviceWorker';
 // let el = compose(applyMiddleware(ThunkMiddleware),
 //     window.__REDUX_DEVTOOLS_EXTENSION__ &&
 //     window.__REDUX_DEVTOOLS_EXTENSION__());
-const store = createStore(rootReducer,compose(applyMiddleware(ThunkMiddleware),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+let redux_dev = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();  
 
-console.log(store);
+let store;
+if(redux_dev!==undefined){
+  store = createStore(rootReducer,compose(applyMiddleware(ThunkMiddleware),redux_dev));
+}
+else{
+  store = createStore(rootReducer,applyMiddleware(ThunkMiddleware));
+}
 
 
 ReactDOM.render(

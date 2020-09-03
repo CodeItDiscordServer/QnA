@@ -29,4 +29,10 @@ def SearchCS290():
         return { "code": "Invlaid MIME type"},400
 
     classid = "hardcoded"
+    print('search/',request.json)
+    for key in hardcoded.items():
+        #parse the request with the hardcoded set of possible filters
+        if(request.args.get(key)):
+            the_filter[key] = request.args.get(key)
+    #####
     return { "results": searchpizza(the_filter) },200

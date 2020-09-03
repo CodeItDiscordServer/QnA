@@ -36,7 +36,7 @@ const SearchBox = (props)=>{
               SearchSequence={props.SearchSequence} updateFilter={props.set_filter}
               />
 
-          {filters && <p>{JSON.stringify(filters)}</p>}
+          {/* {filters && <p>{JSON.stringify(filters)}</p>} */}
 
         </div>
     )
