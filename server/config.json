@@ -1,5 +1,6 @@
 {
   "user": "maddaloc@oregonstate.edu",
   "pass": "wrekt_pizza",
-  "classID": "k89brrt3pq17do"
+  "classID": "k89brrt3pq17do",
+  "mongouri":"mongodb+srv://maddocks:meaty-asdf-pizza@stadia-gamer-takeout.odpog.gcp.mongodb.net/qna?retryWrites=true&w=majority"
 }
