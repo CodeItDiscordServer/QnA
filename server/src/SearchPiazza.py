@@ -139,6 +139,5 @@ def searchpizza(filter_src):
     return wants
 
 
-exports = {"searchpizza":searchpizza}
 
-__exports__ = exports
+__exports__ = {"searchpizza":searchpizza, "credents": credents}
