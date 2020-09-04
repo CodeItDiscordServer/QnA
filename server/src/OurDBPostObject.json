@@ -1,0 +1,20 @@
+{
+  "classid": "",
+  "date": "",
+  "post": {
+    "subject": "",
+    "content": "",
+  },
+  "good-q": 1,
+  "i-answer": 1,
+  "s-answer": 1,
+  "tags": [],
+  "replies":[
+    {
+      "type": "i-answer",
+      "content": "",
+      "followups": [{}]
+    }
+  ]
+
+}

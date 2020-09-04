@@ -4,7 +4,7 @@ import json
 p =Piazza()
 credents = ""
 
-with open('config.json') as json_file:
+with open('../config.json') as json_file:
     credents = json.load(json_file)
 
 
