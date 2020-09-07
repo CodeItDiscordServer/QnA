@@ -1,10 +1,11 @@
 from piazza_api import Piazza
+import src.Mongo  as Mongo
 import json
 
 p =Piazza()
 credents = ""
 
-with open('../config.json') as json_file:
+with open('./config.json') as json_file:
     credents = json.load(json_file)
 
 
@@ -137,7 +138,6 @@ def searchpizza(filter_src):
             print(res)
             wants.append(post)
     return wants
-
 
 
 __exports__ = {"searchpizza":searchpizza, "credents": credents}
