@@ -58,7 +58,7 @@ function searchTermsPresent(summariez,unique){
   margin-left: 25px;
   color: grey;
   `;
-  return (<div>
+  return (<div css={style}>
       {Object.keys(summariez).map(function(term){
       if(summariez[term].length){
         return <GoodCheckbox key={`good-term-${term}-${unique}`} term={term} />
@@ -168,7 +168,7 @@ function ResultCard(props){
 
     return (<Card elevation={1.0} style={{marginLeft:"70px",marginRight:"70px",marginBottom:"20px",padding:"20px"}}>
         {tagsView(topic)}
-        {searchTermsPresent(topic.summariez,topic.created)}
+        {topic.summariez && searchTermsPresent(topic.summariez,topic.created)}
         <div dangerouslySetInnerHTML={{__html:title}} css={subjectStyle}></div>
         <hr/>
         {topic.summariez && Object.keys(topic.summariez).map(function(term){

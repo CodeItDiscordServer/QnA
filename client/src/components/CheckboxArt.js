@@ -4,11 +4,12 @@ import { css, jsx } from '@emotion/core';
 
 const checkStylez = css`
 img {
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
   display: inline-block;
 }
-margin-right: 6px;
+margin: -2px 6px -10px 0;
+
 font-size: 1.25em;
 `;
 
