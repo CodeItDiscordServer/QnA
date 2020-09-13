@@ -83,6 +83,7 @@ function ResponsiveSearchBox(props) {
 
   return (
     <div css={css`width: auto;`}>
+
     {!hamShow && <div css={hamburgerIcons} onClick={()=>toggleBurger(!hamShow)}>
     <i className="fa">☰
     </i></div>}
@@ -192,7 +193,11 @@ span{
 
 
 }
-
+/* @media (max-width: 768px) {
+  .tag{
+    font-size: 25px;
+  }
+} */
 
 input[type="checkbox"]{
      display: none;
@@ -221,6 +226,8 @@ input[type="checkbox"]{
 
    .tag{
      margin-left:40px;
+     font-size: 25px;
+
    }
 
    input[type="checkbox"]:checked + label{

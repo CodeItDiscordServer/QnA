@@ -12,6 +12,7 @@ import {Button,CircularProgress} from "@material-ui/core"
  const tags_contaier=css`
   display: flex;
   flex-wrap: wrap;
+  padding-top: 25px;
   width: 100%;
   @media (max-width: 768px) {
     width:100%;
@@ -68,7 +69,9 @@ function ResponsiveSearchBox(props) {
     color:red;
     background-color: LemonChiffon;
   }
-  @media (max-width: 768px)#{
+  @media (max-width: 768px){
+    font-size:25px;
+
     margin: 10px 0 10px 0;
       &:hover{
         background-color: LemonChiffon;
@@ -180,6 +183,7 @@ function ResponsiveSearchBox(props) {
                     updateMisc("Instructor has answered",!props.filters["Instructor has answered"])
                    }}className="tag">{"Instructor has answered"}</div>
                  </div>
+                 {/*  end instructor                                        */}
 
                  <div style={{cursor:"pointer"}} key={`Student has answered`} className="check-container" css={navItem}>
                     <input type="checkbox" id={`Student has answered`}
@@ -198,8 +202,10 @@ function ResponsiveSearchBox(props) {
                     className="tag">{"Student has answered"}</div>
                   </div>
               </div>
+              {/*  end student                                        */}
 
-            <h3 css={css`font-weight:400;font-size:20px;`}>Tags </h3>
+
+            <h3 css={css`font-weight:400;font-size:20px;`}>Folders </h3>
               <div id="tags-list" css={tags_contaier}>
               {/* the list of true/false filters, the checkbox will be used, but not applied yet.
                 the filter is saved in the site memory with other filters.
