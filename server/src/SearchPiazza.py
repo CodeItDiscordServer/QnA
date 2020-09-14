@@ -33,6 +33,35 @@ wants=[]
 
 
 # uses filter
+def queryMongoWithFilter(filter):
+    LIMIT = 15 # per page
+    # if there is search text then we must filter them  manually here and cant do
+    #mongo query for that althoguht we can filter some.
+    query = { "$and": [] } #init the query object, it will always be and, it is easier this way
+    if(filter["Instructor has answered"]):
+        query["$and"].append( {
+            "i-answer": {"$eq": 1}
+        })
+    if(filter["Student has answered"]):
+        query["$and"].append( {
+            "s-answer": {"$eq": 1}
+        })
+    folders = []
+    for key,value in filter["tags"].items():
+        if(value):
+            folders.append(key)
+    if(len(folders)):
+        query["$and"].append({
+            "tags": {"$all": folders }
+        })
+    initial= []
+    for post in Mongo.db.find(query).limit(LIMIT):
+        post['id'] = ""+str(post['_id'])
+        post.pop("_id")
+        initial.append(post)
+    # if there is search text then there will be additional filtering
+    return initial
+
 
 #somehow the filter needs to be able to check all of them.
 # for instance, the filte could require both student and instructor answer or none of them.
@@ -156,7 +185,7 @@ def getShortLists(text,searchTerm):
     return summaries
 
 
-def searchpizza(filter_src):
+def searchpizza1(filter_src):
     cs290 = p.network(credents["classID"])
     posts = cs290.iter_all_posts(limit=25) # no limit
     wants = []
@@ -170,4 +199,10 @@ def searchpizza(filter_src):
     return wants
 
 
-__exports__ = {"searchpizza":searchpizza, "credents": credents}
+def search_mongo_4_pizza(filter_src):
+    print("hi")
+    raw_results = queryMongoWithFilter(filter_src)
+
+    return raw_results
+
+__exports__ = {"searchpizza":search_mongo_4_pizza, "credents": credents}

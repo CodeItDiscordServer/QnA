@@ -1,6 +1,6 @@
 
 from flask import Flask,request
-from src.SearchPiazza import searchpizza
+from src.SearchPiazza import search_mongo_4_pizza
 # from flask.ext.api.parsers import JSONParser
 
 app = Flask(__name__)
@@ -35,4 +35,4 @@ def SearchCS290():
         if(request.args.get(key)):
             the_filter[key] = request.args.get(key)
     #####
-    return { "results": searchpizza(the_filter) },200
+    return { "results": search_mongo_4_pizza(the_filter) },200

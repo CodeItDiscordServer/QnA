@@ -14,17 +14,11 @@ const tags_hardcoded={
     "hw1": false,
     "hw2": false,
     "hw3": false,
-    "hw4": false
+    "hw4": false,
+    "project": false,
 
   };
-// const folders_hardcoded = {
-//   "hw1": false,
-//   "hw2": false,
-//   "hw3": false,
-//   "hw4": false
-//
-// }
-// folders: folders_hardcoded,
+
 
 const initialState = {
   PiazzaSearchResults : [],
