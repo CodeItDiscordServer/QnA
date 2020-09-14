@@ -127,16 +127,17 @@ function ResponsiveSearchBox(props) {
     }
   return (
     <div css={css`width: auto;`}>
-    {!hamShow && <div css={hamburgerIcons} onClick={()=>toggleBurger(!hamShow)}>
-    <i className="fa">☰
-    </i></div>}
+    {!hamShow &&
+      <div css={hamburgerIcons} onClick={()=>toggleBurger(!hamShow)} >
+        <i className="fa">☰</i>
+      </div>}
 
-      <div className="contents" onClick={()=>toggleBurger(!hamShow)}>
+      <div className="contents" >
         <div className="inner" css={navStyles}>
           <div css={gen}>
             <div css={css`display:flex; justify-content: space-between`}>
               <></>
-              <div css={hamburgerIcons}>❮</div>
+              <div css={hamburgerIcons}onClick={()=>toggleBurger(!hamShow)} >❮</div>
             </div>
           </div>
 
@@ -159,7 +160,8 @@ function ResponsiveSearchBox(props) {
                 (<Button  size="large" variant="outlined" onClick={function(){
                   // we use the statetoprops item filters
                   // and the dispatch to props search sequence.
-                  props.SearchSequence(props.filters) }}>
+                  props.SearchSequence(props.filters);
+                  toggleBurger(!hamShow); }}>
 
                   Search
 
@@ -235,28 +237,6 @@ function ResponsiveSearchBox(props) {
                        </div>)
                     })}
                     </div>
-              {/*<h3 css={css`font-weight:400;font-size:20px;`}>Folders </h3>
-                <div id="tags-list" css={tags_contaier}>
-                {/* the list of true/false filters, the checkbox will be used, but not applied yet.
-                  the filter is saved in the site memory with other filters.
-                      {Object.keys(props.filters.folders).map(function(key){
-                        return (<div key={`folder-check-${key}`} className="check-container" css={navItem}>
-                           <input type="checkbox" id={`folder-${key}`}
-                            checked={props.filters.folders[key]}
-                            onChange={function(){
-
-                            let newTags = props.filters.folders;
-                             newTags[key] = !newTags[key];
-                             // Called Action to change tags
-                             updateFolders(newTags)
-
-                            }} />
-                           <label htmlFor={`folder-${key}`}></label>
-                           <div className="tag">{key}</div>
-                         </div>)
-                      })}
-                      </div>
-                      */}
               <div>
 
               </div>

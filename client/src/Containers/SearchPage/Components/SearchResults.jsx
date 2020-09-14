@@ -116,7 +116,7 @@ function tagsView(topic){
     font-weight:600;
     font-size:1.0em;
     color:#4AC16C;`;
-  let tags = topic.folders;
+  let tags = topic.tags;
   // let tagString = "";
   // tagString+=tags[tag]+"\t\t\t\t"; // defined but never used
   let tagsList = [];
@@ -127,22 +127,17 @@ function tagsView(topic){
     return (<span css={goodthingStyle}>{props.text} +{props.hits}</span>)
   }
 
-  for(let tag in tags){
-      tagsList.push((<TagsView key={`tags-${tags[tag]}`} text={tags[tag]} />))
-  }
-  if(topic.tag_good_arr.length){
+  tags.forEach(function(tag){
+    tagsList.push((<TagsView key={`tags-${tag}`} text={tag} />))
+  })
+
+  if(topic["good-q"]){
     tagsList.push(<GoodThing key={`good-question-${topic.created}`}
-                    text={"Good Question"} hits={topic.tag_good_arr.length} />)
+                    text={"Good Question"} hits={topic["good-q"]} />)
   }
-  var goodanswer = 0;
-  for(var i=0;i<Math.min(2,topic.children.length);i++){
-    if(topic.children[i].tag_endorse_arr && topic.children[i].tag_endorse_arr.length){
-      goodanswer+=topic.children[i].tag_endorse_arr.length;
-    }
-  }
-  if(goodanswer){
+  if(topic["good-a"]){
     tagsList.push(<GoodThing key={`good-answer-${topic.created}`}
-                    text={"Good Answer"} hits={goodanswer} />)
+                    text={"Good Answer"} hits={topic["good-a"]} />)
   }
 
   return (
@@ -154,7 +149,7 @@ function tagsView(topic){
 
 function ResultCard(props){
     let topic = props.topic;
-    let title = topic.history[0].subject;
+    let title = topic.post.subject;
     // let question = topic.history[0].content;
 
 
@@ -168,7 +163,7 @@ function ResultCard(props){
 
     return (<Card elevation={1.0} style={{marginLeft:"70px",marginRight:"70px",marginBottom:"20px",padding:"20px"}}>
         {tagsView(topic)}
-        {topic.summariez && searchTermsPresent(topic.summariez,topic.created)}
+        {topic.summariez && searchTermsPresent(topic.summariez,topic.date)}
         <div dangerouslySetInnerHTML={{__html:title}} css={subjectStyle}></div>
         <hr/>
         {topic.summariez && Object.keys(topic.summariez).map(function(term){
