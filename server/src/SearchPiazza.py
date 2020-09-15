@@ -1,5 +1,7 @@
 from piazza_api import Piazza
 import src.Mongo  as Mongo
+from bson.objectid import ObjectId
+
 import json
 
 p =Piazza()
@@ -51,6 +53,15 @@ def queryMongoWithFilter(filter):
         query["$and"].append({
             "tags": {"$all": filter["tags"] }
         })
+
+    if(filter["skip"]):
+        query["$and"].append({
+            "_id": {"$gt": ObjectId(filter["skip"]) }
+        })
+    if(len(query["$and"]) == 0):
+        query = {}
+
+
     initial= []
     print(query)
     for post in Mongo.db.find(query).limit(LIMIT):
@@ -198,7 +209,6 @@ def searchpizza1(filter_src):
 
 
 def search_mongo_4_pizza(filter_src):
-    print("hi")
     raw_results = queryMongoWithFilter(filter_src)
 
     return raw_results

@@ -43,6 +43,7 @@ class SearchResults extends Component{
   }
 
   scrollListener(){
+    console.log(this.props.isLoading);
       if(this.props.searchResults.length && !this.props.isLoading){
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
             //search agin with the filters and also the mongodb id of the last element

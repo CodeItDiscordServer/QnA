@@ -45,11 +45,17 @@ const pageState =  (state=initialState.pageState,action)=>{
             newState = Object.assign({},state,{loading:true})
             return newState
         case LOADING_SCROLL:
-            return Object.assign({},state,{loading:true,scrollLoading:true})
+            return Object.assign({},state,{scrollLoading:true})
         case SET_SEARCH_RESULTS:
           return Object.assign({},state,{loading:false})
         case APPEND_SEARCH_RESULTS:
-          return Object.assign({},state,{scrollLoading:false})
+        /* if status =200 and empty results that means we reached the end.*/
+          if(action.status ==200 && ! action.results.length){
+            return Object.assign({},state,{scrollLoading:true})
+          }
+          else{
+            return Object.assign({},state,{scrollLoading:false})
+          }
 
         default:
             return state;

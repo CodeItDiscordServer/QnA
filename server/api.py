@@ -32,13 +32,13 @@ def SearchCS290():
      "searchText": "",
      "skip":0
     }
-    filter["Instructor has answered"] = request.args.get("Instructor has answered")
-    filter["Student has answered"] = request.args.get("Student has answered")
+    filter["Instructor has answered"] = 1 if request.args.get("Instructor has answered") == "true" else 0
+    filter["Student has answered"] = 1 if request.args.get("Student has answered") == "true" else 0
     if(len(request.args.get("tags"))):
         filter["tags"] = request.args.get("tags")
         filter["tags"] = filter["tags"].split(",")
     filter["searchText"] = request.args.get("searchText")
-    if(request.args.get("skip")):
+    if(request.args.get("skip") is not "0"):
         filter["skip"] = request.args.get("skip")
 
     #####

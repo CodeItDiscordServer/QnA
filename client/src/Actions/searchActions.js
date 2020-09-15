@@ -39,14 +39,16 @@ export const updateSearchResults = (status=404,results=[]) =>({
     results:results
 })
 
-export const appendSearchResults= (results=[]) =>({
+export const appendSearchResults= (status,results=[]) =>({
     type:APPEND_SEARCH_RESULTS,
-    results:results
+    results:results,
+    status
 })
 
 
 export const InfiniteScroll = (filters,pickUpFromHere) => dispatch =>{
   dispatch(INIT_SCROLL())
+  // var deepcopy = JSON.parse(JSON.stringify(filters))
   let encodedtags = []
   Object.keys(filters.tags).forEach(function(key){
     if(filters.tags[key]){
@@ -63,7 +65,7 @@ export const InfiniteScroll = (filters,pickUpFromHere) => dispatch =>{
     })
   .then(function(resp){
     if(resp.status===200){
-      dispatch(appendSearchResults(resp.data.results));
+      dispatch(appendSearchResults(200,resp.data.results));
         return;
     }
     else {
