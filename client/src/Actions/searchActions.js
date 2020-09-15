@@ -48,16 +48,16 @@ export const appendSearchResults= (status,results=[]) =>({
 
 export const InfiniteScroll = (filters,pickUpFromHere) => dispatch =>{
   dispatch(INIT_SCROLL())
-  // var deepcopy = JSON.parse(JSON.stringify(filters))
+  var deepcopy = JSON.parse(JSON.stringify(filters))
   let encodedtags = []
-  Object.keys(filters.tags).forEach(function(key){
-    if(filters.tags[key]){
+  Object.keys(deepcopy.tags).forEach(function(key){
+    if(deepcopy.tags[key]){
       encodedtags.push(key)
     }
   })
-  filters.skip = pickUpFromHere;
-  filters.tags = encodedtags.join(","); // url encode does not work with objects
-  axios['get'](`${G_SRCH_RSLTS_URL}?${qs.stringify(filters)}`,
+  deepcopy.skip = pickUpFromHere;
+  deepcopy.tags = encodedtags.join(","); // url encode does not work with objects
+  axios['get'](`${G_SRCH_RSLTS_URL}?${qs.stringify(deepcopy)}`,
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
@@ -90,7 +90,7 @@ export const SearchSequence = (filters) => dispatch => {
     dispatch(INIT_FETCH());
 
     // Async calls to the server
-
+    var encodedfilter = JSON.parse(JSON.stringify(filters))
     /*Fetchlifecycle methods implmented in search
     action rather than seperate file
 
@@ -100,13 +100,13 @@ export const SearchSequence = (filters) => dispatch => {
     // we will use get request because i was having trouble doing pagination with th post request
     // also i think this is much easier
     let encodedtags = []
-    Object.keys(filters.tags).forEach(function(key){
-      if(filters.tags[key]){
+    Object.keys(encodedfilter.tags).forEach(function(key){
+      if(encodedfilter.tags[key]){
         encodedtags.push(key)
       }
     })
-    filters.tags = encodedtags.join(","); // url encode does not work with objects
-    axios['get'](`${G_SRCH_RSLTS_URL}?${qs.stringify(filters)}`,
+    encodedfilter.tags = encodedtags.join(","); // url encode does not work with objects
+    axios['get'](`${G_SRCH_RSLTS_URL}?${qs.stringify(encodedfilter)}`,
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
