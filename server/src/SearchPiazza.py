@@ -16,21 +16,6 @@ with open('./config.json') as json_file:
 p.user_login(email=credents["user"],password=credents["pass"])
 
 
-
-
-count =0
-
-hardcoded={
-        "i-answered": 1, #instructor has answered
-        "s-answered": 1, #student has answered
-        "followup": 0, #has at least 1 followup that is not an answer, more of discussion
-        "s-answerUpvoted": 0,
-        "i-answerUpvoted": 0,
-        "q-Upvoted": 0,
-        "limit": 5, # the user would like to only receive this many
-        "search": 0
-}
-
 wants=[]
 
 
@@ -194,23 +179,41 @@ def getShortLists(text,searchTerm):
     return summaries
 
 
-def searchpizza1(filter_src):
-    cs290 = p.network(credents["classID"])
-    posts = cs290.iter_all_posts(limit=25) # no limit
-    wants = []
 
-    for post in posts:
-        res=filterPost(post,filter_src)
-        if(res):
-            if(res != 1):
-                post["summariez"] = res
-            wants.append(post)
-    return wants
+# does not stride through a reply to a reply,
+#only searches the questino, the answers and the followups
+def textFilter(array,filter):
+    refined = []
+    for doc in array:
+        hits = {}
+        for word in filter["searchText"]:
+            hits[word] = []
+            #search the question
+            if(word in doc["post"]["content"]):
+                hits[word].append(getShortLists(doc["post"]["content"],word))
+            ### now to search the replies
+            for reply in doc["replies"]:
+                if(word in reply["reply"]):
+                    hits[word].append(getShortLists(reply["reply"],word))
+        ##if any of the hits have a length...
+        for word in filter["searchText"]:
+            if(len(hits[word])):
+                doc["summariez"] = hits
+                refined.append(doc)
+                break
+        #######
+    #######################
+    return refined
 
 
 def search_mongo_4_pizza(filter_src):
     raw_results = queryMongoWithFilter(filter_src)
-
-    return raw_results
+    if(len(filter_src["searchText"])):
+        filter_src["searchHits"] = {}
+        filter_src["searchText"] = filter_src["searchText"].split(" ")
+        ##################
+        return textFilter(raw_results,filter_src)
+    else:
+        return raw_results
 
 __exports__ = {"searchpizza":search_mongo_4_pizza, "credents": credents}
