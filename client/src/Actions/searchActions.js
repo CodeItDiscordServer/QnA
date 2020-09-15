@@ -57,31 +57,38 @@ export const InfiniteScroll = (filters,pickUpFromHere) => dispatch =>{
   })
   deepcopy.skip = pickUpFromHere;
   deepcopy.tags = encodedtags.join(","); // url encode does not work with objects
-  axios['get'](`${G_SRCH_RSLTS_URL}?${qs.stringify(deepcopy)}`,
+
+
+
+  setTimeout(function(){
+
+    axios['get'](`${G_SRCH_RSLTS_URL}?${qs.stringify(deepcopy)}`,
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
       }
     })
-  .then(function(resp){
-    if(resp.status===200){
-      dispatch(appendSearchResults(200,resp.data.results));
+    .then(function(resp){
+      if(resp.status===200){
+        dispatch(appendSearchResults(200,resp.data.results));
         return;
-    }
-    else {
-      this.reject({
-        "code": resp.status,
-        "message": resp
-      });
-    }
-  })
-  .catch(function(eer){
-    console.log(eer);
+      }
+      else {
+        this.reject({
+          "code": resp.status,
+          "message": resp
+        });
+      }
+    })
+    .catch(function(eer){
+      console.log(eer);
       dispatch(appendSearchResults([]));
 
-  })
-}
+    })
 
+
+  },690);
+}
 
 export const SearchSequence = (filters) => dispatch => {
 
