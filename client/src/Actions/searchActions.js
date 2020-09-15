@@ -1,8 +1,10 @@
 import {SET_SEARCH_RESULTS,
-  FETCHING,UPDATE_POST_FILTER} from '../ActionTypes/ActionTypes'
+  FETCHING,UPDATE_POST_FILTER,LOADING_SCROLL,
+APPEND_SEARCH_RESULTS} from '../ActionTypes/ActionTypes'
 import { G_SRCH_RSLTS_URL} from '../ActionTypes/UrlTypes';
 
 import axios from "axios";
+import qs from "query-string";
 /*
 
 ASYNC ACTIONS ARE FUNCTIONS THAT DISPATCH ACTIONS MEANWHILE CALLING
@@ -15,6 +17,7 @@ const HTTP_MSGS ={
     405:"CAN'T CONNECT TO SERVER"
 }
 
+
 export const set_filter = (filter) =>{
   return {
     type:UPDATE_POST_FILTER,
@@ -26,6 +29,9 @@ export const set_filter = (filter) =>{
 export const INIT_FETCH= ()=>({
     type:FETCHING
 })
+export const INIT_SCROLL = () => ({
+  type: LOADING_SCROLL
+})
 
 export const updateSearchResults = (status=404,results=[]) =>({
     type:SET_SEARCH_RESULTS,
@@ -33,6 +39,46 @@ export const updateSearchResults = (status=404,results=[]) =>({
     results:results
 })
 
+export const appendSearchResults= (results=[]) =>({
+    type:APPEND_SEARCH_RESULTS,
+    results:results
+})
+
+
+export const InfiniteScroll = (filters,pickUpFromHere) => dispatch =>{
+  dispatch(INIT_SCROLL())
+  let encodedtags = []
+  Object.keys(filters.tags).forEach(function(key){
+    if(filters.tags[key]){
+      encodedtags.push(key)
+    }
+  })
+  filters.skip = pickUpFromHere;
+  filters.tags = encodedtags.join(","); // url encode does not work with objects
+  axios['get'](`${G_SRCH_RSLTS_URL}?${qs.stringify(filters)}`,
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      }
+    })
+  .then(function(resp){
+    if(resp.status===200){
+      dispatch(appendSearchResults(resp.data.results));
+        return;
+    }
+    else {
+      this.reject({
+        "code": resp.status,
+        "message": resp
+      });
+    }
+  })
+  .catch(function(eer){
+    console.log(eer);
+      dispatch(appendSearchResults([]));
+
+  })
+}
 
 
 export const SearchSequence = (filters) => dispatch => {
@@ -49,16 +95,19 @@ export const SearchSequence = (filters) => dispatch => {
     we would still have a then/catch clause in this
     function anyways.
         */
-
-    //POST is the only way to change teh content type to application/json,
-    // however we might be able to do a get, if we url encode the search.
-    // i think axios made it a design paradim that you cant send a request
-    // body with a get.
-    axios['post'](G_SRCH_RSLTS_URL,
-      JSON.stringify(filters),
+    // we will use get request because i was having trouble doing pagination with th post request
+    // also i think this is much easier
+    let encodedtags = []
+    Object.keys(filters.tags).forEach(function(key){
+      if(filters.tags[key]){
+        encodedtags.push(key)
+      }
+    })
+    filters.tags = encodedtags.join(","); // url encode does not work with objects
+    axios['get'](`${G_SRCH_RSLTS_URL}?${qs.stringify(filters)}`,
       {
         headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
         }
       })
     .then(function(resp){

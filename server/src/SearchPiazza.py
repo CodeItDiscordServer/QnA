@@ -46,15 +46,13 @@ def queryMongoWithFilter(filter):
         query["$and"].append( {
             "s-answer": {"$eq": 1}
         })
-    folders = []
-    for key,value in filter["tags"].items():
-        if(value):
-            folders.append(key)
-    if(len(folders)):
+
+    if(len(filter["tags"])):
         query["$and"].append({
-            "tags": {"$all": folders }
+            "tags": {"$all": filter["tags"] }
         })
     initial= []
+    print(query)
     for post in Mongo.db.find(query).limit(LIMIT):
         post['id'] = ""+str(post['_id'])
         post.pop("_id")

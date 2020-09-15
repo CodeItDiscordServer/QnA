@@ -21,18 +21,25 @@ def GiveGrettings():
     return {"greetings": "you suck big pp"}
 
 
-@app.route("/api/search",methods=["GET","POST"])
+@app.route("/api/search",methods=["GET"])
 def SearchCS290():
-    if(request.is_json):
-        the_filter = request.get_json()
-    else:
-        return { "code": "Invlaid MIME type"},400
 
     classid = "hardcoded"
-    print('search/',request.json)
-    for key in hardcoded.items():
-        #parse the request with the hardcoded set of possible filters
-        if(request.args.get(key)):
-            the_filter[key] = request.args.get(key)
+    filter = {
+     "Instructor has answered":0,
+     "Student has answered":0,
+     "tags": [],
+     "searchText": "",
+     "skip":0
+    }
+    filter["Instructor has answered"] = request.args.get("Instructor has answered")
+    filter["Student has answered"] = request.args.get("Student has answered")
+    if(len(request.args.get("tags"))):
+        filter["tags"] = request.args.get("tags")
+        filter["tags"] = filter["tags"].split(",")
+    filter["searchText"] = request.args.get("searchText")
+    if(request.args.get("skip")):
+        filter["skip"] = request.args.get("skip")
+
     #####
-    return { "results": search_mongo_4_pizza(the_filter) },200
+    return { "results": search_mongo_4_pizza(filter) },200

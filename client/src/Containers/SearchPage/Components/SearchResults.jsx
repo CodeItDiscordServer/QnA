@@ -1,48 +1,94 @@
 /**  @jsx jsx */
 /* @jsxFrag React.Fragment */
+import {Component} from "react"
 import { css, jsx } from '@emotion/core';
 import {connect} from 'react-redux'
 import {Card} from "@material-ui/core"
 
 // import React from 'react';
 // import { Paper,Card,CardHeader,CardContent } from '@material-ui/core'
-import {isSearchPageLoading,searchResults} from '../../../Reducers/index.js'
+import {isInfiniteLoading,searchResults,SearchPageFilters} from '../../../Reducers/index.js'
 import {GoodCheckbox,MissingCheckbox} from "../../../components/CheckboxArt.js"
+import {InfiniteScroll} from '../../../Actions/searchActions'
+import InfiniteScrollAlert from "../../../components/InfiniteScrollAlert.js"
 
-
-const stateToProps = state =>({
-    isLoading: isSearchPageLoading(state),
-    searchResults:searchResults(state)
-});
+const stateToProps = state => {
+  return {
+    isLoading: isInfiniteLoading(state),
+    searchResults: searchResults(state),
+    filters: SearchPageFilters(state)
+  }
+}
 
 const dispatchToProps = {
-
+  InfiniteScroll
 };
 
-const SearchResults = props =>{
-    let results = props.searchResults;
+// not to remove your code luffy sorry i jsut needed to used
+// component did mount and component willupdate
+class SearchResults extends Component{
 
-    if(results !==undefined){
-        let resultsView = [];
-        if(results.length!==0){
-          let count=0
-            for(let id in results){
-                resultsView.push(<ResultCard key={`result-${count}`} topic = {results[id]}/>)
-                count++;
-            }
+  constructor(){
+    super();
+    this.scrollListener = this.scrollListener.bind(this)
+  }
 
-        }
-        else{
-            resultsView.push(<h3>zero search results</h3>)
-        }
-        return resultsView;
+  componentDidMount(){
+    window.addEventListener("scroll",this.scrollListener)
+  }
+  componentWillUnmount(){
+    window.removeEventListener("scroll",this.scrollListener)
+  }
+  componentWillUpdate(nextProps,nextState){
+  }
 
-    }
-    else{
-      return (<div></div>)
-    }
+  scrollListener(){
+      if(this.props.searchResults.length && !this.props.isLoading){
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            //search agin with the filters and also the mongodb id of the last element
+            //to continue
+               this.props.InfiniteScroll(this.props.filters,
+                          this.props.searchResults[this.props.searchResults.length-1].id)
+           }
+      }
+  }
+
+  render(){
+    let results = this.props.searchResults;
+
+    return (
+      <div>
+         {results !== undefined && !results && <h3>zero search results</h3>}
+         {results && results.map(function(result,index){
+           return (<ResultCard key={`result-${index}`} topic = {result}/>)
+         })}
+         {this.props.isLoading && <InfiniteScrollAlert />}
+      </div>
+    )
+  }
 
 }
+//
+// const SearchResults = props =>{
+//
+//     if(results !==undefined){
+//         let resultsView = [];
+//         if(results.length!==0){
+//           let count=0
+//             for(let id in results){
+//                 resultsView.push()
+//                 count++;
+//             }
+//
+//         }
+//         return resultsView;
+//
+//     }
+//     else{
+//       return (<div></div>)
+//     }
+//
+// }
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -82,12 +128,7 @@ function metaresult(term,dict,unique){
   font-size:1.1em;
   color: #444;
   `;
-  const subjectStyle =css`
-    font-weight: bold;
-    padding: 15px;
-    color: cornflowerblue;
-    font-size: 1.15em;
-  `
+
   return (<div key={`meta-result-${term}-${unique}`}>
 
     {dict[term].length ? dict[term][0].map(function(short,index){
