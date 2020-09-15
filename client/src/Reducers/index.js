@@ -50,7 +50,7 @@ const pageState =  (state=initialState.pageState,action)=>{
           return Object.assign({},state,{loading:false})
         case APPEND_SEARCH_RESULTS:
         /* if status =200 and empty results that means we reached the end.*/
-          if(action.status ==200 && ! action.results.length){
+          if(action.status ===200 && ! action.results.length){
             return Object.assign({},state,{scrollLoading:true})
           }
           else{
@@ -119,10 +119,8 @@ export default combineReducers({
 
 
 /* maybe move these to a file ./selectors.js
-
-i moved searchstate.js to index, because you were referencing the same variables in
-two different files, just one file, you could create another file
-and put these selectors in them, but do not reference them here as well if you do {
+These are state selecors, we put them here and reference them in map state to props,
+putting them here is better.
 */
 export const isSearchPageLoading = (state)=>state.pageState.loading
 export const isInfiniteLoading = (state)=>state.pageState.scrollLoading

@@ -23,7 +23,6 @@ const dispatchToProps = {
 
 const SearchBox = (props)=>{
   const {isLoading, filters} = props;
-  console.log(filters);
     return (
         <div>
           {/*Since we are no longer doing
