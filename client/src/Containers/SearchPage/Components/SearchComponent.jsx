@@ -18,7 +18,7 @@ const stateToProps = state =>({
 
 const dispatchToProps = {
   SearchSequence,
-  set_filter
+  set_filter,
 }
 
 const SearchBox = (props)=>{
@@ -35,8 +35,6 @@ const SearchBox = (props)=>{
               loading={props.isLoading} filters={filters}
               SearchSequence={props.SearchSequence} updateFilter={props.set_filter}
               />
-
-          {/* {filters && <p>{JSON.stringify(filters)}</p>} */}
 
         </div>
     )

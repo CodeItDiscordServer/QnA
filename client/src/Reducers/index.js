@@ -1,7 +1,9 @@
 import { combineReducers} from "redux"
 import {FETCHING,
   SET_SEARCH_RESULTS,
-  UPDATE_POST_FILTER,UPDATE_CLASS_ID} from '../ActionTypes/ActionTypes'
+  UPDATE_POST_FILTER,UPDATE_CLASS_ID,
+  LOADING_SCROLL,
+  APPEND_SEARCH_RESULTS} from '../ActionTypes/ActionTypes'
 
 
 
@@ -30,7 +32,8 @@ const initialState = {
 
     pageState:{
         loading:false,
-        searchResults: null
+        searchResults: undefined,
+        scrollLoading:false
     }
 }
 
@@ -41,29 +44,13 @@ const pageState =  (state=initialState.pageState,action)=>{
         case FETCHING:
             newState = Object.assign({},state,{loading:true})
             return newState
+        case LOADING_SCROLL:
+            return Object.assign({},state,{loading:true,scrollLoading:true})
         case SET_SEARCH_RESULTS:
-            if(action.status===200){
-              newState = Object.assign({},state,{             ...state,
-                loading: false,
-                searchResults: action.results
-              })
-            }
-            else if(action.status===500){
-              newState = Object.assign({},state,{
-                       loading:false,error:true,message:"No Search Results"
-              });
-            }
-            //VERY IMPORATANT NEED for ELSE lmao it ok
-            else{
-              newState = {
-                ...state, // this mean populate it with initial values FIRST
-                loading: false,
-                error: true,
-                message: "error fetching"
-              }
+          return Object.assign({},state,{loading:false})
+        case APPEND_SEARCH_RESULTS:
+          return Object.assign({},state,{scrollLoading:false})
 
-            }
-            return newState
         default:
             return state;
     }
@@ -104,6 +91,11 @@ const searchState = (state=initialState.PiazzaSearchResults,action)=>{
                return state
             }
             break;
+          case APPEND_SEARCH_RESULTS:
+              return {
+                ...state,
+                results: state.results.concat(action.results)
+              }
         default:
             return state
     }
@@ -127,5 +119,6 @@ two different files, just one file, you could create another file
 and put these selectors in them, but do not reference them here as well if you do {
 */
 export const isSearchPageLoading = (state)=>state.pageState.loading
+export const isInfiniteLoading = (state)=>state.pageState.scrollLoading
 export const searchResults = (state) => state.searchState.results
 export const SearchPageFilters = (state) => state.filterState
