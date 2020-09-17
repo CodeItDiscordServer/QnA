@@ -1,6 +1,5 @@
 from piazza_api import Piazza
 import src.Mongo  as Mongo
-from bson.objectid import ObjectId
 
 import json
 
@@ -18,43 +17,6 @@ p.user_login(email=credents["user"],password=credents["pass"])
 
 wants=[]
 
-
-# uses filter
-def queryMongoWithFilter(filter):
-    LIMIT = 15 # per page
-    # if there is search text then we must filter them  manually here and cant do
-    #mongo query for that althoguht we can filter some.
-    query = { "$and": [] } #init the query object, it will always be and, it is easier this way
-    if(filter["Instructor has answered"]):
-        query["$and"].append( {
-            "i-answer": {"$eq": 1}
-        })
-    if(filter["Student has answered"]):
-        query["$and"].append( {
-            "s-answer": {"$eq": 1}
-        })
-
-    if(len(filter["tags"])):
-        query["$and"].append({
-            "tags": {"$all": filter["tags"] }
-        })
-
-    if(filter["skip"]):
-        query["$and"].append({
-            "_id": {"$gt": ObjectId(filter["skip"]) }
-        })
-    if(len(query["$and"]) == 0):
-        query = {}
-
-
-    initial= []
-    print(query)
-    for post in Mongo.db.find(query).limit(LIMIT):
-        post['id'] = ""+str(post['_id'])
-        post.pop("_id")
-        initial.append(post)
-    # if there is search text then there will be additional filtering
-    return initial
 
 
 #somehow the filter needs to be able to check all of them.
@@ -207,7 +169,7 @@ def textFilter(array,filter):
 
 
 def search_mongo_4_pizza(filter_src):
-    raw_results = queryMongoWithFilter(filter_src)
+    raw_results = Mongo.queryMongoWithFilter(filter_src)
     if(len(filter_src["searchText"])):
         filter_src["searchHits"] = {}
         filter_src["searchText"] = filter_src["searchText"].split(" ")
