@@ -148,7 +148,6 @@ def textFilter(array,filter):
     refined = []
     for doc in array:
         hits = {}
-        print(doc["post"]["content"])
         for word in filter["searchText"]:
             hits[word] = []
             #search the subject
@@ -162,7 +161,6 @@ def textFilter(array,filter):
             for reply in doc["replies"]:
                 if(word in reply["reply"]):
                     hits[word].append(getShortLists(reply["reply"],word))
-        print(hits)
         ##if any of the hits have a length...
         for word in filter["searchText"]:
             if(len(hits[word])):
