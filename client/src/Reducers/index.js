@@ -47,7 +47,7 @@ const pageState =  (state=initialState.pageState,action)=>{
         case LOADING_SCROLL:
             return Object.assign({},state,{scrollLoading:true})
         case SET_SEARCH_RESULTS:
-          return Object.assign({},state,{loading:false})
+          return Object.assign({},state,{loading:false,scrollLoading:false})
         case APPEND_SEARCH_RESULTS:
         /* if status =200 and empty results that means we reached the end.*/
           if(action.status ===200 && ! action.results.length){
