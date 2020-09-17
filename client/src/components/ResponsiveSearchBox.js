@@ -4,9 +4,6 @@ import * as React from "react";
 import { css, jsx } from '@emotion/core';
 import {Button} from "@material-ui/core"
 
-
-// import {Link} from "react-router-dom";
-
  const tags_contaier=css`
   display: flex;
   flex-wrap: wrap;
