@@ -1,13 +1,13 @@
 from piazza_api import Piazza
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+
 import json
 import  html2text
 import time
 
 with open('./config.json') as json_file:
     credents = json.load(json_file)
-
-
 
 
 h = html2text.HTML2Text()
@@ -19,8 +19,42 @@ client = MongoClient(credents["mongouri"])
 db = client.qna["posts-redacted"]
 
 
+# uses filter
+def queryMongoWithFilter(filter):
+    LIMIT = 15 # per page
+    # if there is search text then we must filter them  manually here and cant do
+    #mongo query for that althoguht we can filter some.
+    query = { "$and": [] } #init the query object, it will always be and, it is easier this way
+    if(filter["Instructor has answered"]):
+        query["$and"].append( {
+            "i-answer": {"$eq": 1}
+        })
+    if(filter["Student has answered"]):
+        query["$and"].append( {
+            "s-answer": {"$eq": 1}
+        })
+
+    if(len(filter["tags"])):
+        query["$and"].append({
+            "tags": {"$all": filter["tags"] }
+        })
+
+    if(filter["skip"]):
+        query["$and"].append({
+            "_id": {"$gt": ObjectId(filter["skip"]) }
+        })
+    if(len(query["$and"]) == 0):
+        query = {}
 
 
+    initial= []
+    print(query)
+    for post in db.find(query).limit(LIMIT):
+        post['id'] = ""+str(post['_id'])
+        post.pop("_id")
+        initial.append(post)
+    # if there is search text then there will be additional filtering
+    return initial
 
   # var goodanswer = 0;
   # for(var i=0;i<Math.min(2,topic.children.length);i++){
@@ -48,6 +82,16 @@ def BackupConvert(post,id):
     # i think there is always a history object here.
     ourjson["post"]["subject"] = h.handle(post["history"][0]["subject"])
     ourjson["post"]["content"] = h.handle(post["history"][0]["content"])
+
+    ## here i isolate handles that
+    text = ourjson["post"]["content"].strip()
+    if(len(text) == 0):
+        # h = html2text.HTML2Text()
+        print("|{}|".format(post["history"][0]["content"]))
+
+        #fall back to the raw post
+        ourjson["post"]["content"] = post["history"][0]["content"]
+
 
     try:
         ourjson["good-q"] = len(post["tag_good_arr"])
@@ -118,14 +162,18 @@ def BackupClassGivenClassID(id):
     posts = pizzaclass.iter_all_posts(limit=None)
     count = 0
 
-    for post in posts:
+    for post in client.qna["posts"].find():
         # result = db.insert_one(BackupConvert(post,id)).inserted_id
+        p = BackupConvert(post,id)["post"]
+
         count = count +1
         print(count)
         # reset the counter
-        time.sleep(1.5)
+        # time.sleep(1.5)
 
     return
+BackupClassGivenClassID("k89brrt3pq17do")
+
 
 
 #

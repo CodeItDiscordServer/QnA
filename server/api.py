@@ -38,7 +38,7 @@ def SearchCS290():
         filter["tags"] = request.args.get("tags")
         filter["tags"] = filter["tags"].split(",")
     filter["searchText"] = request.args.get("searchText")
-    if(request.args.get("skip") is not "0"):
+    if(request.args.get("skip") != "0"):
         filter["skip"] = request.args.get("skip")
 
     #####

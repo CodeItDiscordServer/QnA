@@ -7,7 +7,9 @@ const InfiniteScrollAlert = ()=>{
   unlicensed author Eric Matthys@codepen.io
   */
   const style = css`
-      margin: auto;
+      margin-left: auto;
+      margin-right:auto;
+      margin-bottom:50px;
       padding-top:5px;
       width: 64px;
       height: 64px;
