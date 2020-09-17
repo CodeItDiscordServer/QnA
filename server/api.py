@@ -42,4 +42,4 @@ def SearchCS290():
         filter["skip"] = request.args.get("skip")
 
     #####
-    return { "results": search_mongo_4_pizza(filter) },200
+    return search_mongo_4_pizza(filter),200

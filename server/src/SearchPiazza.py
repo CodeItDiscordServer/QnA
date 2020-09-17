@@ -176,12 +176,14 @@ def textFilter(array,filter):
 
 def search_mongo_4_pizza(filter_src):
     raw_results = Mongo.queryMongoWithFilter(filter_src)
+    cursor = raw_results[len(raw_results)-1]["id"]
     if(len(filter_src["searchText"])):
         filter_src["searchHits"] = {}
         filter_src["searchText"] = filter_src["searchText"].split(" ")
         ##################
-        return textFilter(raw_results,filter_src)
+        return { "results": textFilter(raw_results,filter_src),"cursor": cursor }
     else:
-        return raw_results
+        return { "results": raw_results, "cursor": cursor }
+
 
 __exports__ = {"searchpizza":search_mongo_4_pizza, "credents": credents}
