@@ -90,8 +90,8 @@ export const InfiniteScroll = (filters,pickUpFromHere) => dispatch =>{
   },420);
 }
 
+const LIMIT = 15
 export const SearchSequence = (filters) => dispatch => {
-
 
     // Set state to loading
     dispatch(INIT_FETCH());
@@ -122,6 +122,9 @@ export const SearchSequence = (filters) => dispatch => {
     .then(function(resp){
       if(resp.status===200){
         dispatch(updateSearchResults(resp.status,resp.data.results));
+        if(resp.data.results.length < LIMIT){
+          dispatch(InfiniteScroll(encodedfilter,resp.data.results[resp.data.results.length-1].id))
+        }
           return;
       }
       else{
