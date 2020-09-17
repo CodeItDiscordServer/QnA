@@ -7,7 +7,7 @@ import {Card} from "@material-ui/core"
 
 // import React from 'react';
 // import { Paper,Card,CardHeader,CardContent } from '@material-ui/core'
-import {isInfiniteLoading,searchResults,SearchPageFilters} from '../../../Reducers/index.js'
+import {isInfiniteLoading,getCursor,searchResults,SearchPageFilters} from '../../../Reducers/index.js'
 import {GoodCheckbox,MissingCheckbox} from "../../../components/CheckboxArt.js"
 import {InfiniteScroll} from '../../../Actions/searchActions'
 import InfiniteScrollAlert from "../../../components/InfiniteScrollAlert.js"
@@ -16,7 +16,8 @@ const stateToProps = state => {
   return {
     isLoading: isInfiniteLoading(state),
     searchResults: searchResults(state),
-    filters: SearchPageFilters(state)
+    filters: SearchPageFilters(state),
+    cursor: getCursor(state)
   }
 }
 
@@ -49,7 +50,7 @@ class SearchResults extends Component{
             //search agin with the filters and also the mongodb id of the last element
             //to continue
                this.props.InfiniteScroll(this.props.filters,
-                          this.props.searchResults[this.props.searchResults.length-1].id)
+                          this.props.cursor)
            }
       }
   }

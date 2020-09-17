@@ -32,16 +32,25 @@ export const INIT_FETCH= ()=>({
 export const INIT_SCROLL = () => ({
   type: LOADING_SCROLL
 })
+const initialData = {
+  "results": [],
+  "cursor": null
+}
+export const updateSearchResults = (status=404,data=initialData) =>{
+  console.log(data);
+  return {
+      type:SET_SEARCH_RESULTS,
+      status:status,
+      results:data["results"],
+      cursor: data["cursor"],
 
-export const updateSearchResults = (status=404,results=[]) =>({
-    type:SET_SEARCH_RESULTS,
-    status:status,
-    results:results
-})
+  }
+}
 
-export const appendSearchResults= (status,results=[]) =>({
+export const appendSearchResults= (status,data=initialData) =>({
     type:APPEND_SEARCH_RESULTS,
-    results:results,
+    results:data["results"],
+    cursor: data["cursor"],
     status
 })
 
@@ -70,7 +79,7 @@ export const InfiniteScroll = (filters,pickUpFromHere) => dispatch =>{
     })
     .then(function(resp){
       if(resp.status===200){
-        dispatch(appendSearchResults(200,resp.data.results));
+        dispatch(appendSearchResults(200,resp.data));
         return;
       }
       else {
@@ -121,9 +130,9 @@ export const SearchSequence = (filters) => dispatch => {
       })
     .then(function(resp){
       if(resp.status===200){
-        dispatch(updateSearchResults(resp.status,resp.data.results));
+        dispatch(updateSearchResults(resp.status,resp.data));
         if(resp.data.results.length < LIMIT){
-          dispatch(InfiniteScroll(encodedfilter,resp.data.results[resp.data.results.length-1].id))
+          dispatch(InfiniteScroll(encodedfilter,resp.data.cursor))
         }
           return;
       }

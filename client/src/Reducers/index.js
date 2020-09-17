@@ -90,7 +90,8 @@ const searchState = (state=initialState.PiazzaSearchResults,action)=>{
             else if(action.status ===200){
                 return {
                 ...state,
-                results: action.results
+                results: action.results,
+                cursor: action.cursor
               }
             }
             else if(action.status===303){
@@ -100,7 +101,8 @@ const searchState = (state=initialState.PiazzaSearchResults,action)=>{
           case APPEND_SEARCH_RESULTS:
               return {
                 ...state,
-                results: state.results.concat(action.results)
+                results: state.results.concat(action.results),
+                cursor: action.cursor
               }
         default:
             return state
@@ -122,6 +124,7 @@ export default combineReducers({
 These are state selecors, we put them here and reference them in map state to props,
 putting them here is better.
 */
+export const getCursor = (state)=>state.searchState.cursor
 export const isSearchPageLoading = (state)=>state.pageState.loading
 export const isInfiniteLoading = (state)=>state.pageState.scrollLoading
 export const searchResults = (state) => state.searchState.results
