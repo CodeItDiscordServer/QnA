@@ -148,6 +148,7 @@ def textFilter(array,filter):
     refined = []
     for doc in array:
         hits = {}
+        print(doc["post"]["content"])
         for word in filter["searchText"]:
             hits[word] = []
             #search the subject
