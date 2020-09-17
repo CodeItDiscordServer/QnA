@@ -3,14 +3,14 @@
 import { css, jsx } from '@emotion/core';
 
 const checkStylez = css`
-img {
-  width: 15px;
-  height: 15px;
-  display: inline-block;
-}
-margin: -2px 6px -10px 0;
+  img {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+  }
+  margin: -2px 6px -10px 0;
 
-font-size: 1.25em;
+  font-size: 1.25em;
 `;
 
 export const MissingCheckbox = (props)=>{

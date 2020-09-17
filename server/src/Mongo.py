@@ -3,7 +3,6 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 import json
-import  html2text
 import time
 
 from bs4 import BeautifulSoup
@@ -12,8 +11,6 @@ with open('./config.json') as json_file:
     credents = json.load(json_file)
 
 
-h = html2text.HTML2Text()
-h.ignore_links = False
 
 
 pizza = Piazza()
@@ -58,70 +55,9 @@ def queryMongoWithFilter(filter):
     # if there is search text then there will be additional filtering
     return initial
 
-  # var goodanswer = 0;
-  # for(var i=0;i<Math.min(2,topic.children.length);i++){
-  #   if(topic.children[i].tag_endorse_arr && topic.children[i].tag_endorse_arr.length){
-  #     goodanswer+=topic.children[i].tag_endorse_arr.length;
-  #   }
-  # }
-def BackupConvert(post,id):
-    ourjson = {
-      "classid": id,
-      "date": "",
-      "post": {
-        "subject": "",
-        "content": "",
-      },
-      "good-q": 0,
-      "good-a": 0,
-      "i-answer": 0,
-      "s-answer": 0,
-      "tags": [],
-      "replies":[]
-    }
-    ourjson["date"] = post["created"]
-
-    # i think there is always a history object here.
-    ourjson["post"]["subject"] = h.handle(post["history"][0]["subject"])
-    ourjson["post"]["content"] = h.handle(post["history"][0]["content"])
-
-    ## here i isolate handles that
-    text = ourjson["post"]["content"].strip()
-    if(len(text) == 0):
-        # h = html2text.HTML2Text()
-        contentForFirstPost = post["history"][0]["content"]
-        
-        print("|{}|".format(contentForFirstPost))
-        print(f'|||{h.handle(contentForFirstPost)}|||')
-        #fall back to the raw post
-        ourjson["post"]["content"] = post["history"][0]["content"]
-
-
-    try:
-        ourjson["good-q"] = len(post["tag_good_arr"])
-    except(KeyError):
-        ourjson["good-q"] = 0
-
-    ourjson["tags"] = post["folders"]
-    for followup in post["children"]:
-        # we wont know the details but we will know that this post has a lot of supported answers
-        # by the numbers.
-        try:
-            ourjson["good-a"] = ourjson["good-a"] + len(followup["tag_endorse_arr"])
-        except(KeyError):
-            pass
-
-        if(followup["type"]=="i_answer"):
-            ourjson["i-answer"]=1
-        if(followup["type"]=="s_answer"):
-            ourjson["s-answer"]=1
-        ourjson["replies"].append(extractFollowup(followup))
-
-    return ourjson
-
 
 def ConverterBeautifulSoup(post,id):
-    
+
     ourjson = {
       "classid": id,
       "date": "",
@@ -139,20 +75,22 @@ def ConverterBeautifulSoup(post,id):
     ourjson["date"] = post["created"]
 
     # i think there is always a history object here.
-    ourjson["post"]["subject"] = h.handle(post["history"][0]["subject"])
-    ourjson["post"]["content"] = h.handle(post["history"][0]["content"])
+    contentForFirstPost = post["history"][0]["content"]
+    contentForPostSubject = post["history"][0]["subject"]
+    soup = BeautifulSoup(contentForFirstPost, 'html.parser')
+    soup1 = BeautifulSoup(contentForPostSubject, 'html.parser')
 
-    ## here i isolate handles that
-    text = ourjson["post"]["content"].strip()
-    if(len(text) == 0):
-        # h = html2text.HTML2Text()
-        contentForFirstPost = post["history"][0]["content"]
-        
-        # print("|{}|".format(contentForFirstPost))
-        soup = BeautifulSoup(contentForFirstPost, 'html.parser')    
-        # print(soup.get_text())
-        #fall back to the raw post
-        ourjson["post"]["content"] = soup.get_text()
+
+
+    ourjson["post"]["content"] = soup.get_text()
+    ourjson["post"]["subject"] = soup1.get_text()
+
+    # ## here i isolate handles that
+    # text = ourjson["post"]["content"].strip()
+    # if(len(text) == 0):
+    #     # h = html2text.HTML2Text()
+    #
+    #     print("|{}|".format(contentForFirstPost))
 
 
     try:
@@ -187,10 +125,14 @@ def extractFollowup(followup):
     "reply": "",
     "followups":[]
     }
+
     try:
-        stuff["reply"] = h.handle(followup["history"][0]["content"])
+        soup = BeautifulSoup(followup["history"][0]["content"], 'html.parser')
     except(KeyError):
-        stuff["reply"] = h.handle(followup["subject"])
+        soup = BeautifulSoup(followup["subject"], 'html.parser')
+
+    stuff["reply"] = soup.get_text()
+
     try:
         for nestedF in followup["children"]:
             #recursive call
@@ -224,13 +166,13 @@ def BackupClassGivenClassID(id):
     count = 0
 
     for post in client.qna["posts"].find():
-        # result = db.insert_one(BackupConvert(post,id)).inserted_id
-        p = ConverterBeautifulSoup(post,id)["post"]
-
-        count = count +1
-        print(count)
+        result = db.insert_one(ConverterBeautifulSoup(post,id)).inserted_id
+        # p = ConverterBeautifulSoup(post,id)
+        print(result)
+        # count = count +1
+        # print(count)
         # reset the counter
-        # time.sleep(1.5)
+        time.sleep(1.5)
 
     return
 # BackupClassGivenClassID("k89brrt3pq17do")

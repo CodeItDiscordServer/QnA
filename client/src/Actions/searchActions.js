@@ -87,7 +87,7 @@ export const InfiniteScroll = (filters,pickUpFromHere) => dispatch =>{
     })
 
 
-  },690);
+  },420);
 }
 
 export const SearchSequence = (filters) => dispatch => {
