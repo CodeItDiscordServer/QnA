@@ -32,6 +32,9 @@ class SearchResults extends Component{
   constructor(){
     super();
     this.scrollListener = this.scrollListener.bind(this)
+    
+    this.PostsSelected4Details = React.createContext([]);
+    this.PostsSelected4Details.displayName = 'SelectedPosts 4 Detail View';
   }
 
   componentDidMount(){
@@ -44,7 +47,7 @@ class SearchResults extends Component{
   }
 
   scrollListener(){
-    console.log(this.props.isLoading);
+    // console.log(this.props.isLoading);
       if(this.props.searchResults.length && !this.props.isLoading){
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
             //search agin with the filters and also the mongodb id of the last element
