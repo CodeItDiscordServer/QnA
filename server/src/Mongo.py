@@ -85,13 +85,6 @@ def ConverterBeautifulSoup(post,id):
     ourjson["post"]["content"] = soup.get_text()
     ourjson["post"]["subject"] = soup1.get_text()
 
-    # ## here i isolate handles that
-    # text = ourjson["post"]["content"].strip()
-    # if(len(text) == 0):
-    #     # h = html2text.HTML2Text()
-    #
-    #     print("|{}|".format(contentForFirstPost))
-
 
     try:
         ourjson["good-q"] = len(post["tag_good_arr"])

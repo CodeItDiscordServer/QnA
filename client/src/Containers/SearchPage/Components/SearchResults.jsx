@@ -70,27 +70,7 @@ class SearchResults extends Component{
   }
 
 }
-//
-// const SearchResults = props =>{
-//
-//     if(results !==undefined){
-//         let resultsView = [];
-//         if(results.length!==0){
-//           let count=0
-//             for(let id in results){
-//                 resultsView.push()
-//                 count++;
-//             }
-//
-//         }
-//         return resultsView;
-//
-//     }
-//     else{
-//       return (<div></div>)
-//     }
-//
-// }
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -130,12 +110,13 @@ function metaresult(term,dict,unique){
   font-size:1.1em;
   color: #444;
   `;
+  console.log(dict);
 
   return (<div key={`meta-result-${term}-${unique}`}>
 
-    {dict[term].length ? dict[term][0].map(function(short,index){
+    {dict[term].length  ? dict[term].map(function(short,index){
 
-      let content = short.replace(term,`<b>${term}</b>`)
+      let content = short[0].replace(term,`<b>${term}</b>`)
       return (
         <span key={`${term}-result-${index}`} css={paraStyle} dangerouslySetInnerHTML={{__html:`...${content}...`}}></span>
       )
