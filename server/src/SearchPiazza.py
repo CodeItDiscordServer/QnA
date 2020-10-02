@@ -204,6 +204,8 @@ def search_mongo_4_pizza(filter_src):
         return { "results": filterd ,"cursor": cursor }
     # if no text filter we should have enough results.
     else:
+        raw_results = Mongo.queryMongoWithFilter(filter_src)
+        cursor = raw_results[len(raw_results)-1]["id"] # this is always the cursor,
         return { "results": raw_results, "cursor": cursor }
 
 

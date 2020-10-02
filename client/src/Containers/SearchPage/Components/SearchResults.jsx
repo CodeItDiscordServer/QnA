@@ -110,7 +110,6 @@ function metaresult(term,dict,unique){
   font-size:1.1em;
   color: #444;
   `;
-  console.log(dict);
 
   return (<div key={`meta-result-${term}-${unique}`}>
 
