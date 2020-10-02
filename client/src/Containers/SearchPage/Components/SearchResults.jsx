@@ -1,6 +1,6 @@
 /**  @jsx jsx */
 /* @jsxFrag React.Fragment */
-import {Component} from "react"
+import {Component,createContext} from "react"
 import { css, jsx } from '@emotion/core';
 import {connect} from 'react-redux'
 import {Card} from "@material-ui/core"
@@ -32,8 +32,8 @@ class SearchResults extends Component{
   constructor(){
     super();
     this.scrollListener = this.scrollListener.bind(this)
-    
-    this.PostsSelected4Details = React.createContext([]);
+
+    this.PostsSelected4Details = createContext([]);
     this.PostsSelected4Details.displayName = 'SelectedPosts 4 Detail View';
   }
 
