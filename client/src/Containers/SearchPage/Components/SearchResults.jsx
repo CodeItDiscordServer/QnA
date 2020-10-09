@@ -1,6 +1,6 @@
 /**  @jsx jsx */
 /* @jsxFrag React.Fragment */
-import {Component,createContext} from "react"
+import {Component} from "react"
 import { css, jsx } from '@emotion/core';
 import {connect} from 'react-redux'
 import {Card} from "@material-ui/core"
@@ -11,6 +11,8 @@ import {isInfiniteLoading,getCursor,searchResults,SearchPageFilters} from '../..
 import {GoodCheckbox,MissingCheckbox} from "../../../components/CheckboxArt.js"
 import {InfiniteScroll} from '../../../Actions/searchActions'
 import InfiniteScrollAlert from "../../../components/InfiniteScrollAlert.js"
+import {PostsSelected4Details} from "../SearchPageContext.js"
+
 
 const stateToProps = state => {
   return {
@@ -33,8 +35,6 @@ class SearchResults extends Component{
     super();
     this.scrollListener = this.scrollListener.bind(this)
 
-    this.PostsSelected4Details = createContext([]);
-    this.PostsSelected4Details.displayName = 'SelectedPosts 4 Detail View';
   }
 
   componentDidMount(){
@@ -42,8 +42,6 @@ class SearchResults extends Component{
   }
   componentWillUnmount(){
     window.removeEventListener("scroll",this.scrollListener)
-  }
-  componentWillUpdate(nextProps,nextState){
   }
 
   scrollListener(){
@@ -62,13 +60,14 @@ class SearchResults extends Component{
     let results = this.props.searchResults;
 
     return (
-      <div>
-         {results !== undefined && !results && <h3>zero search results</h3>}
-         {results && results.map(function(result,index){
-           return (<ResultCard key={`result-${index}`} topic = {result}/>)
-         })}
-         {this.props.isLoading && <InfiniteScrollAlert />}
-      </div>
+
+          <div>
+            {results !== undefined && !results && <h3>zero search results</h3>}
+             {results && results.map(function(result,index){
+               return (<ResultCard key={`result-${index}`} topic = {result}/>)
+             })}
+             {this.props.isLoading && <InfiniteScrollAlert />}
+           </div>
     )
   }
 
@@ -184,19 +183,36 @@ function ResultCard(props){
       padding: 15px;
       color: #007FC7;
       font-size: 1.3em;
-    `
+    `;
+    const isSelectedStyle=css`
+     border: 1px solid #007fc7;
+    `;
 
 
-    return (<Card elevation={1.0} style={{marginLeft:"70px",marginRight:"70px",marginBottom:"20px",padding:"20px"}}>
-        {tagsView(topic)}
-        {topic.summariez && searchTermsPresent(topic.summariez,topic.date)}
-        <div dangerouslySetInnerHTML={{__html:title}} css={subjectStyle}></div>
-        <hr/>
-        {topic.summariez && Object.keys(topic.summariez).map(function(term){
-          return metaresult(term,topic.summariez,topic.created);
-        })}
+    return (
+      <PostsSelected4Details.Consumer>
+        { ({selected,update }) =>
+          (
+            <Card
+                onClick={()=>{
+                  console.log(selected);
+                  update(topic.id);
+                }}
+                css={selected.includes(topic.id) && isSelectedStyle}
+                 elevation={1.0} style={{marginLeft:"70px",marginRight:"70px",marginBottom:"20px",padding:"20px"}}>
+                {tagsView(topic)}
+                {topic.summariez && searchTermsPresent(topic.summariez,topic.date)}
+                <div dangerouslySetInnerHTML={{__html:title}} css={subjectStyle}></div>
+                <hr/>
+                {topic.summariez && Object.keys(topic.summariez).map(function(term){
+                  return metaresult(term,topic.summariez,topic.created);
+                })}
 
-    </Card>)
+            </Card>
+          )
+        }
+      </PostsSelected4Details.Consumer>
+    );
 
 }
 
