@@ -16,7 +16,8 @@ function LinkToDetails(props){
   if(props.selected.length){
     return (
       <div css={stickybutton}>
-        <a href={`/render/posts?dump=${props.selected.join(",")}`}><Button type="button">View details <br />of {props.selected.length} posts!</Button></a>
+      {/*ALERT, IN PRODUCTION WE NEED TO REMOVE THE LOCALHOST:5000 part.*/}
+        <a href={`http://localhost:5000/render/posts?dump=${props.selected.join(",")}`}><Button type="button">View details <br />of {props.selected.length} posts!</Button></a>
       </div>
     )
   }
