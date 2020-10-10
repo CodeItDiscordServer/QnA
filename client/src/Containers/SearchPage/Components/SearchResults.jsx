@@ -58,13 +58,13 @@ class SearchResults extends Component{
 
   render(){
     let results = this.props.searchResults;
-
+    let active = this.props.active;
     return (
 
           <div>
             {results !== undefined && !results && <h3>zero search results</h3>}
              {results && results.map(function(result,index){
-               return (<ResultCard key={`result-${index}`} topic = {result}/>)
+               return (<ResultCard selected={active.includes(result.id)} key={`result-${index}`} topic = {result}/>)
              })}
              {this.props.isLoading && <InfiniteScrollAlert />}
            </div>
@@ -191,15 +191,16 @@ function ResultCard(props){
 
     return (
       <PostsSelected4Details.Consumer>
-        { ({selected,update }) =>
-          (
+        { ({update}) =>
+          (<div onClick={()=>{
+            update(topic.id);
+            }}>
             <Card
-                onClick={()=>{
-                  console.log(selected);
-                  update(topic.id);
-                }}
-                css={selected.includes(topic.id) && isSelectedStyle}
-                 elevation={1.0} style={{marginLeft:"70px",marginRight:"70px",marginBottom:"20px",padding:"20px"}}>
+
+                 css={props.selected && isSelectedStyle}
+                 elevation={1.0}
+                 style={{marginLeft:"70px",marginRight:"70px",marginBottom:"20px",padding:"20px"}}
+                 >
                 {tagsView(topic)}
                 {topic.summariez && searchTermsPresent(topic.summariez,topic.date)}
                 <div dangerouslySetInnerHTML={{__html:title}} css={subjectStyle}></div>
@@ -209,6 +210,7 @@ function ResultCard(props){
                 })}
 
             </Card>
+            </div>
           )
         }
       </PostsSelected4Details.Consumer>

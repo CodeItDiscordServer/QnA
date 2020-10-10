@@ -1,18 +1,18 @@
 import React, {useState} from 'react'
-import SearchBox from './Components/SearchComponent'
-import SearchResults from './Components/SearchResults'
 import { Divider } from '@material-ui/core'
 
+import SearchResults from './Components/SearchResults'
+import SearchBox from './Components/SearchComponent'
 import {PostsSelected4Details} from "./SearchPageContext.js"
-
+import LinkToDetails from "./Components/LinkToDetails.js";
 
 
 
 const SearchPage=(props)=>{
    var [selected, setArray] = useState([])
    const updateSelected = (id)=>{
+     let temp = []
      if(selected.includes(id)){
-       let temp = []
        // in order replicata mutually exclusive
        // append function.
        for(let i=0;i<selected.length;i++){
@@ -23,14 +23,18 @@ const SearchPage=(props)=>{
            temp.push(selected[i])
          }
        }
+
+       // possibly instead use
+       // indexOf and delete?
        setArray(temp);
      }
      else{
-       selected.push(id)
+       temp = JSON.parse(JSON.stringify(selected))
+       temp.push(id)
+       setArray(temp);
      }
 
    }
-// (id)=> {console.log("add/remove",id);}
     return (
         <div className="SearchContainer">
           <SearchBox />
@@ -42,11 +46,8 @@ const SearchPage=(props)=>{
                   selected,
                   update: updateSelected
                 }}>
-
-            <PostsSelected4Details.Consumer>
-             { ({selected}) => {console.log(selected);}}
-             </PostsSelected4Details.Consumer>
-             <SearchResults />
+                <LinkToDetails selected={selected} />
+                <SearchResults active={selected}/>
           </PostsSelected4Details.Provider>
         </div>
       )

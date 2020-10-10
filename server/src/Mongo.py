@@ -17,6 +17,12 @@ pizza = Piazza()
 client = MongoClient(credents["mongouri"])
 db = client.qna["posts-redacted"]
 
+def get_bulk_posts(arr):
+    ids = []
+    for str in arr:
+        ids.append(ObjectId(str))
+    ###
+    return db.find({ "_id": {"$in": ids} })
 
 # uses filter
 def queryMongoWithFilter(filter):

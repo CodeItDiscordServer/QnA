@@ -1,7 +1,8 @@
 
-from flask import Flask,request
+from flask import Flask,request,render_template
 from src.SearchPiazza import search_mongo_4_pizza
 # from flask.ext.api.parsers import JSONParser
+from src.Mongo import get_bulk_posts
 
 app = Flask(__name__)
 
@@ -20,6 +21,16 @@ hardcoded={
 def GiveGrettings():
     return {"greetings": "you suck big pp"}
 
+@app.route("/render/posts")
+def RenderPage():
+    dump = request.args.get("dump").split(",")
+    if(dump):
+        posts = []
+        for post in get_bulk_posts(dump):
+            posts.append(post)
+        return render_template("DetailsView.html",posts=posts)
+    else:
+        return "no dump",400
 
 @app.route("/api/search",methods=["GET"])
 def SearchCS290():
