@@ -3,7 +3,8 @@ import {FETCHING,
   SET_SEARCH_RESULTS,
   UPDATE_POST_FILTER,UPDATE_CLASS_ID,
   LOADING_SCROLL,
-  APPEND_SEARCH_RESULTS} from '../ActionTypes/ActionTypes'
+  APPEND_SEARCH_RESULTS,
+SET_REACT_POST_DETAILS} from '../ActionTypes/ActionTypes'
 
 
 
@@ -33,7 +34,8 @@ const initialState = {
     pageState:{
         loading:false,
         searchResults: undefined,
-        scrollLoading:false
+        scrollLoading:false,
+        piazzaPostDetails: undefined,
     }
 }
 
@@ -48,6 +50,8 @@ const pageState =  (state=initialState.pageState,action)=>{
             return Object.assign({},state,{scrollLoading:true})
         case SET_SEARCH_RESULTS:
           return Object.assign({},state,{loading:false,scrollLoading:false})
+        case SET_REACT_POST_DETAILS:
+          return Object.assign({},state,{loading:false, piazzaPostDetails: action.data})
         case APPEND_SEARCH_RESULTS:
         /* if status =200 and empty results that means we reached the end.*/
           if(action.status ===200 && ! action.results.length){
@@ -124,6 +128,7 @@ export default combineReducers({
 These are state selecors, we put them here and reference them in map state to props,
 putting them here is better.
 */
+export const getPiazzaDetails = (state)=> state.pageState.piazzaPostDetails
 export const getCursor = (state)=>state.searchState.cursor
 export const isSearchPageLoading = (state)=>state.pageState.loading
 export const isInfiniteLoading = (state)=>state.pageState.scrollLoading

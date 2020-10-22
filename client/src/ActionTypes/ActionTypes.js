@@ -6,3 +6,4 @@ export const UPDATE_POST_FILTER = "update entire filter, pieced together earlier
 export const UPDATE_CLASS_ID = " restricting filter to particular class"
 export const LOADING_SCROLL = "loading next infinite scroll page"
 export const APPEND_SEARCH_RESULTS = "appending these next few posts";
+export const SET_REACT_POST_DETAILS = "this is the post details for the react client, share l8r."

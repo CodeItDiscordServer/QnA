@@ -32,6 +32,17 @@ def RenderPage():
     else:
         return "no dump",400
 
+@app.route("/api/json-details")
+def fetchJsonDetails():
+    dump = request.args.get("dump").split(",")
+    if(dump):
+        posts = []
+        for post in get_bulk_posts(dump):
+            posts.append(post)
+        return {"dump": dump},200
+    else:
+        return "no dump specified",400
+
 @app.route("/api/search",methods=["GET"])
 def SearchCS290():
 

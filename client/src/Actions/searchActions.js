@@ -1,6 +1,7 @@
 import {SET_SEARCH_RESULTS,
   FETCHING,UPDATE_POST_FILTER,LOADING_SCROLL,
-APPEND_SEARCH_RESULTS} from '../ActionTypes/ActionTypes'
+APPEND_SEARCH_RESULTS,
+SET_REACT_POST_DETAILS} from '../ActionTypes/ActionTypes'
 import { G_SRCH_RSLTS_URL} from '../ActionTypes/UrlTypes';
 
 import axios from "axios";
@@ -37,15 +38,22 @@ const initialData = {
   "cursor": null
 }
 export const updateSearchResults = (status=404,data=initialData) =>{
-  console.log(data);
   return {
       type:SET_SEARCH_RESULTS,
       status:status,
       results:data["results"],
       cursor: data["cursor"],
-
   }
 }
+
+const updatePostDetailsReact = (status=500,data=[]) =>{
+  return {
+    type: SET_REACT_POST_DETAILS,
+    status,
+    data
+  }
+}
+
 
 export const appendSearchResults= (status,data=initialData) =>({
     type:APPEND_SEARCH_RESULTS,
@@ -53,6 +61,36 @@ export const appendSearchResults= (status,data=initialData) =>({
     cursor: data["cursor"],
     status
 })
+
+
+
+export const DetailsJsonSearchSequence = (ids) => dispatch => {
+  dispatch(INIT_FETCH());
+
+  axios['get'](`/api/json-details?dump=${ids.join(",")}`)
+  .then(function(resp){
+    if(resp.status===200){
+      dispatch(updatePostDetailsReact(resp.status,resp.data.dump));
+      return;
+    }
+    else{
+        this.reject({
+          "code": resp.status,
+          "message": resp
+        });
+    }
+  })
+  .catch(function(e){
+    console.log(`\n\n\t${JSON.stringify(e)}\n`);
+
+    /* this makes page state rerturn undefined.
+
+    */
+    dispatch((500,[])
+    );
+    return;
+  })
+}
 
 
 export const InfiniteScroll = (filters,pickUpFromHere) => dispatch =>{
