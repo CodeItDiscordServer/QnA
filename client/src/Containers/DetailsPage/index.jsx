@@ -1,5 +1,13 @@
 import React, {useState} from 'react'
 import { Divider } from '@material-ui/core'
+import { LinearProgress } from "@material-ui/core"
+import {Link} from "react-router-dom"
+import {connect} from 'react-redux';
+
+
+import {isSearchPageLoading,
+        SearchPageFilters,
+        pizzaPostIds} from "../../Reducers/index.js"
 
 
 
@@ -12,12 +20,15 @@ const stateToProps = state =>({
 
 
 
+
 const DetailsPage=(props)=>{
     let {isLoading,details,ids} = props;
 
     return (
         <div className="DetailsListContainer">
         {isLoading && (<LinearProgress />)}
+
+        <Link to="/">Back To Search</Link>
 
           <Divider variant="middle"/>
           {/* We have a context Provider
@@ -28,4 +39,4 @@ const DetailsPage=(props)=>{
 }
 
 
-export default DetailsPage;
+export default connect(stateToProps,{})(DetailsPage);

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Divider } from '@material-ui/core'
+import {connect} from 'react-redux';
 
 import SearchResults from './Components/SearchResults'
 import SearchBox from './Components/SearchComponent'

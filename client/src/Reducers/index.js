@@ -87,6 +87,11 @@ const filterState  = (state=initialState.filterState,action)=>{
 
 const searchState = (state=initialState.PiazzaSearchResults,action)=>{
     switch(action.type){
+        case SET_POST_DETAILS_OBJECT_IDS:
+          return {
+            ...state,
+            detailIds: action.data
+          }
         case SET_SEARCH_RESULTS:
             if(action.status===500){
                 return state
@@ -128,6 +133,7 @@ export default combineReducers({
 These are state selecors, we put them here and reference them in map state to props,
 putting them here is better.
 */
+export const pizzaPostIds = (state) =>state.searchState.detailIds
 export const getPiazzaDetails = (state)=> state.pageState.piazzaPostDetails
 export const getCursor = (state)=>state.searchState.cursor
 export const isSearchPageLoading = (state)=>state.pageState.loading
