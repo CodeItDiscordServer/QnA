@@ -4,7 +4,7 @@ import {FETCHING,
   UPDATE_POST_FILTER,UPDATE_CLASS_ID,
   LOADING_SCROLL,
   APPEND_SEARCH_RESULTS,
-SET_REACT_POST_DETAILS} from '../ActionTypes/ActionTypes'
+SET_REACT_POST_DETAILS,} from '../ActionTypes/ActionTypes'
 
 
 
@@ -19,7 +19,6 @@ const tags_hardcoded={
     "hw3": false,
     "hw4": false,
     "project": false,
-
   };
 
 
@@ -35,7 +34,7 @@ const initialState = {
         loading:false,
         searchResults: undefined,
         scrollLoading:false,
-        piazzaPostDetails: undefined,
+        piazzaPostDetails: [],
     }
 }
 
@@ -60,7 +59,6 @@ const pageState =  (state=initialState.pageState,action)=>{
           else{
             return Object.assign({},state,{scrollLoading:false})
           }
-
         default:
             return state;
     }
@@ -87,7 +85,7 @@ const filterState  = (state=initialState.filterState,action)=>{
 
 const searchState = (state=initialState.PiazzaSearchResults,action)=>{
     switch(action.type){
-        case SET_POST_DETAILS_OBJECT_IDS:
+        case SET_REACT_POST_DETAILS:
           return {
             ...state,
             detailIds: action.data

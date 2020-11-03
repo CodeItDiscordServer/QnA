@@ -1,7 +1,7 @@
 /**  @jsx jsx */
 /* @jsxFrag React.Fragment */
 import { css, jsx } from '@emotion/core';
-import {Button} from "@material-ui/core";
+import {Link} from "react-router-dom"
 // import {Link} from "react-router-dom";
 
 function LinkToDetails(props){
@@ -17,7 +17,7 @@ function LinkToDetails(props){
     return (
       <div css={stickybutton}>
       {/*ALERT, IN PRODUCTION WE NEED TO REMOVE THE LOCALHOST:5000 part.*/}
-        <a href={`http://localhost:5000/render/posts?dump=${props.selected.join(",")}`}><Button type="button">View details <br />of {props.selected.length} posts!</Button></a>
+        <Link to="/details">View details <br />of {props.selected.length} posts!</Link>
       </div>
     )
   }

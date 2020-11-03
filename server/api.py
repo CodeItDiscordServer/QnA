@@ -38,8 +38,10 @@ def fetchJsonDetails():
     if(dump):
         posts = []
         for post in get_bulk_posts(dump):
+            # _ids are not serializable and also not needed in the react render of details page.
+            del  post["_id"]
             posts.append(post)
-        return {"dump": dump},200
+        return {"dump": posts},200
     else:
         return "no dump specified",400
 

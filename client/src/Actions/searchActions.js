@@ -67,6 +67,7 @@ export const appendSearchResults= (status,data=initialData) =>({
 export const DetailsJsonSearchSequence = (ids) => dispatch => {
   dispatch(INIT_FETCH());
 
+
   axios['get'](`/api/json-details?dump=${ids.join(",")}`)
   .then(function(resp){
     if(resp.status===200){
