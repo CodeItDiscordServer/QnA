@@ -148,7 +148,7 @@ function ResponsiveSearchBox(props) {
               <div css={css`flex:11;alignment-baseline:center;`} onClick={function(e){e.stopPropagation()}} >
                 <label htmlFor="search-text">
                   <input type="text"
-                  placeholder={"What is the formula of...?"}
+                  placeholder={"help clarification tip"}
                   css={searchInput} value={props.filters.searchText}
                     onChange={(event) => {updateSearchText(event.target.value)}} />
                   </label>

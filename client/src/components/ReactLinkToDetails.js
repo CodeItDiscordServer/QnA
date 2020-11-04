@@ -6,6 +6,10 @@ import {Link} from "react-router-dom"
 
 function LinkToDetails(props){
   const stickybutton = css`
+    background-color: #A0A0A0;
+    text-color: #fff;
+    padding:10px;
+    border-radius: 25%;
       position: fixed;
       top: 30px;
       right: 0px;

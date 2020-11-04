@@ -24,6 +24,10 @@ function LinkToDetails(props){
     display: inline-block;
     left: 40%;
 
+    p{
+      background-color: rgba(216,216,216,0.2)
+    }
+
 
    .tooltiptext {
     visibility: hidden;
@@ -74,7 +78,7 @@ function LinkToDetails(props){
       {/*ALERT, IN PRODUCTION WE NEED TO REMOVE THE LOCALHOST:5000 part.*/}
       <input type="text" readOnly css={hidden} value={`http://localhost:5000/render/posts?dump=${props.ids.join(",")}`} id="myInput" />
     <Button type="button"  onClick={copyToClipboard} css={copytext}>
-      Share <br /> {props.ids.length} posts with a friend!
+      <p>Share <br /> {props.ids.length} posts with a friend!</p>
           <span className="tooltiptext" id="myTooltip">Copy to clipboard</span>
         </Button>
 

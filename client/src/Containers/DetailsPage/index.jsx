@@ -1,13 +1,14 @@
 /**  @jsx jsx */
 /* @jsxFrag React.Fragment */
-import { css, jsx } from '@emotion/core';
+import {  jsx } from '@emotion/core';
 import {Component} from 'react'
 import { Divider } from '@material-ui/core'
 import { LinearProgress } from "@material-ui/core"
 import {Link} from "react-router-dom"
 import {connect} from 'react-redux';
+import {Button} from "@material-ui/core";
 
-
+import DetailsStyle from "./style.js"
 import {isSearchPageLoading,
         getPiazzaDetails} from "../../Reducers/index.js"
 import {DetailsJsonSearchSequence} from  "../../Actions/searchActions.js"
@@ -30,41 +31,42 @@ const dispatchToProps = {
 class DetailsPage extends Component {
 
   componentDidMount(){
-    if(!this.props.details.length && this.props.ids.length){
+    if(this.props.ids.length && this.props.ids.length !== this.props.details.length){
       this.props.DetailsJsonSearchSequence(this.props.ids)
     }
   }
 
   renderDetails(){
-
-    return (<div>
-      {this.props.details.length && this.props.details.map(function(post,index){
+    return (<div css={DetailsStyle}>
+      {this.props.details.length > 0 && this.props.details.map(function(post,index){
         return (
           <div key={`post-#-${index}`} className="post-card">
-              <p>Tags</p>
               {
                 post.tags.map(function(tag,tagI){
                   return (
-                    <span key={`post-${index}-tag-${tagI}`} className="tag">
+                    <span key={`post-${index}-tag-${tagI}`}
+                          className="tag">
                       {tag}
                     </span>
                   )
                 })
               }
-              <h5>{post.post.subject}</h5>
-              <p>{post.post.content}</p>
+              <p className="question-subject">{post.post.subject}</p>
+              <p className="question-content">{post.post.content}</p>
 
               <h6>Replies</h6>
               {
                 post.replies.map(function(reply,replyI){
                   return (
-                  <div key={`post-${index}-reply-${replyI}`}>
+                  <div key={`post-${index}-reply-${replyI}`}
+                      className="reply">
                     <p>{reply.reply}</p>
-                    {reply.followups.length && (<h6>Followups</h6>)}
+                    {reply.followups.length > 0 && (<h6>Followups</h6>)}
                     {
-                        reply.followups.length && reply.followups.map(function(followup,follI){
+                        reply.followups.length > 0 && reply.followups.map(function(followup,follI){
                               return (
-                                <p key={`post-${index}-reply-${replyI}-followup-${follI}`}>
+                                <p key={`post-${index}-reply-${replyI}-followup-${follI}`}
+                                  className="followup">
                                   {followup.reply}
                                 </p>
                               )
@@ -94,7 +96,11 @@ class DetailsPage extends Component {
         {isLoading && (<LinearProgress />)}
 
 
-        <Link to="/" style={{zIndex: 5}}>Back To Search</Link>
+        <Button type="button">
+          <Link to="/" style={{zIndex: 5}}>
+            Back To Search
+            </Link>
+        </Button>
         <ShareLinkAlert ids={ids}  />
           <Divider variant="middle"/>
           {/* We have a context Provider

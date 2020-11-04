@@ -4,25 +4,28 @@
 
   <title>View Selected Posts</title>
 
+  <link href="/static/details.css" rel="stylesheet" />
+
 <!-- possibly bootstrap? -->
 </head>
 <body>
   {% for post in posts %}
   <div class="post-card">
-      <p>Tags</p>
         {% for tag in post.tags %}
-        <span class="tag">{{tag}}
+        <span class="tag">{{tag}}</span>
         {% endfor %}
-      <h5>{{post.post.subject}}</h5>
-      <p>{{post.post.content}}</p>
+      <p class="question-subject">{{post.post.subject}}</p>
+      <p class="question-content">{{post.post.content}}</p>
 
       <h6>Replies</h6>
       {% for reply in post.replies %}
+      <div class="reply">
         <p>{{reply.reply}}</p>
         <h6>Followups</h6>
           {% for replyy in reply.followups %}
-            <p>{{replyy.reply}}</p>
+            <p class="followup">{{replyy.reply}}</p>
           {% endfor %}
+        </div>
       {% endfor %}
 
   </div>
