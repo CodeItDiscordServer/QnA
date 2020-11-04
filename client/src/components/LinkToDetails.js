@@ -73,10 +73,11 @@ function LinkToDetails(props){
       }
     `;
   if(props.ids.length){
+    const hostname = window.
     return (
       <div css={stickybutton}>
       {/*ALERT, IN PRODUCTION WE NEED TO REMOVE THE LOCALHOST:5000 part.*/}
-      <input type="text" readOnly css={hidden} value={`http://localhost:5000/render/posts?dump=${props.ids.join(",")}`} id="myInput" />
+      <input type="text" readOnly css={hidden} value={`${window.location.protocol}//${window.location.host}/render/posts?dump=${props.ids.join(",")}`} id="myInput" />
     <Button type="button"  onClick={copyToClipboard} css={copytext}>
       <p>Share <br /> {props.ids.length} posts with a friend!</p>
           <span className="tooltiptext" id="myTooltip">Copy to clipboard</span>

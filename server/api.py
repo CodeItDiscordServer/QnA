@@ -16,7 +16,10 @@ hardcoded={
         "limit": 5, # the user would like to only receive this many
         "search": 0
 }
-
+@app.route("/")
+def  react():
+    return render_template("index.html")
+    
 @app.route('/api/')
 def GiveGrettings():
     return {"greetings": "you suck big pp"}
