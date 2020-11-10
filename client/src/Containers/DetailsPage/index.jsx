@@ -45,28 +45,28 @@ class DetailsPage extends Component {
                 post.tags.map(function(tag,tagI){
                   return (
                     <span key={`post-${index}-tag-${tagI}`}
-                          className="tag">
+                          className="details-tag">
                       {tag}
                     </span>
                   )
                 })
               }
-              <p className="question-subject">{post.post.subject}</p>
-              <p className="question-content">{post.post.content}</p>
+              <p className="details-question-subject">{post.post.subject}</p>
+              <p className="details-question-content">{post.post.content}</p>
 
               <h6>Replies</h6>
               {
                 post.replies.map(function(reply,replyI){
                   return (
                   <div key={`post-${index}-reply-${replyI}`}
-                      className="reply">
+                      className="details-reply">
                     <p>{reply.reply}</p>
                     {reply.followups.length > 0 && (<h6>Followups</h6>)}
                     {
                         reply.followups.length > 0 && reply.followups.map(function(followup,follI){
                               return (
                                 <p key={`post-${index}-reply-${replyI}-followup-${follI}`}
-                                  className="followup">
+                                  className="details-followup">
                                   {followup.reply}
                                 </p>
                               )
