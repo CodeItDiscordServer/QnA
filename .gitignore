@@ -8,4 +8,4 @@ client/node_modules
 .vscode
 
 
-server/static/bundle
+server/static/bundle/*

@@ -8,7 +8,6 @@ import {Link} from "react-router-dom"
 import {connect} from 'react-redux';
 import {Button} from "@material-ui/core";
 
-import DetailsStyle from "./style.js"
 import {isSearchPageLoading,
         getPiazzaDetails} from "../../Reducers/index.js"
 import {DetailsJsonSearchSequence} from  "../../Actions/searchActions.js"
@@ -37,7 +36,7 @@ class DetailsPage extends Component {
   }
 
   renderDetails(){
-    return (<div css={DetailsStyle}>
+    return (<div >
       {this.props.details.length > 0 && this.props.details.map(function(post,index){
         return (
           <div key={`post-#-${index}`} className="post-card">

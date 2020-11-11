@@ -73,7 +73,6 @@ function LinkToDetails(props){
       }
     `;
   if(props.ids.length){
-    const hostname = window.
     return (
       <div css={stickybutton}>
       {/*ALERT, IN PRODUCTION WE NEED TO REMOVE THE LOCALHOST:5000 part.*/}
