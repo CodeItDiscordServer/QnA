@@ -4,15 +4,7 @@ import { jsx } from '@emotion/core';
 import { Component } from 'react'
 import { Divider } from '@material-ui/core'
 import { LinearProgress } from "@material-ui/core"
-<<<<<<< HEAD
-import {Link} from "react-router-dom"
-import {connect} from 'react-redux';
-import {Button} from "@material-ui/core";
 
-import {isSearchPageLoading,
-        getPiazzaDetails} from "../../Reducers/index.js"
-import {DetailsJsonSearchSequence} from  "../../Actions/searchActions.js"
-=======
 import { Link } from "react-router-dom"
 import { connect } from 'react-redux';
 import { Button } from "@material-ui/core";
@@ -21,7 +13,6 @@ import {
   getPiazzaDetails
 } from "../../Reducers/index.js"
 import { DetailsJsonSearchSequence } from "../../Actions/searchActions.js"
->>>>>>> 1684fcd698d25fb402dc792c75076f1890b37f1b
 import ShareLinkAlert from "../../components/LinkToDetails.js"
 
 
