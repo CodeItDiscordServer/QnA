@@ -8,7 +8,6 @@ import LinkToDetails from "../../components/ReactLinkToDetails.js";
 
 
 const SearchPage=(props)=>{
-
     return (
         <div className="SearchContainer">
           <SearchBox />
