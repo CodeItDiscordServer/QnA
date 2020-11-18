@@ -17,6 +17,12 @@ pizza = Piazza()
 client = MongoClient(credents["mongouri"])
 db = client.qna["posts-redacted"]
 
+def get_bulk_posts(arr):
+    ids = []
+    for str in arr:
+        ids.append(ObjectId(str))
+    ###
+    return db.find({ "_id": {"$in": ids} })
 
 # uses filter
 def queryMongoWithFilter(filter):
@@ -84,13 +90,6 @@ def ConverterBeautifulSoup(post,id):
 
     ourjson["post"]["content"] = soup.get_text()
     ourjson["post"]["subject"] = soup1.get_text()
-
-    # ## here i isolate handles that
-    # text = ourjson["post"]["content"].strip()
-    # if(len(text) == 0):
-    #     # h = html2text.HTML2Text()
-    #
-    #     print("|{}|".format(contentForFirstPost))
 
 
     try:

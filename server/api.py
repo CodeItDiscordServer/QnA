@@ -1,7 +1,8 @@
 
-from flask import Flask,request
+from flask import Flask,request,render_template
 from src.SearchPiazza import search_mongo_4_pizza
 # from flask.ext.api.parsers import JSONParser
+from src.Mongo import get_bulk_posts
 
 app = Flask(__name__)
 
@@ -15,11 +16,37 @@ hardcoded={
         "limit": 5, # the user would like to only receive this many
         "search": 0
 }
-
+@app.route("/")
+def  react():
+    return render_template("index.html")
+    
 @app.route('/api/')
 def GiveGrettings():
     return {"greetings": "you suck big pp"}
 
+@app.route("/render/posts")
+def RenderPage():
+    dump = request.args.get("dump").split(",")
+    if(dump):
+        posts = []
+        for post in get_bulk_posts(dump):
+            posts.append(post)
+        return render_template("DetailsView.html",posts=posts)
+    else:
+        return "no dump",400
+
+@app.route("/api/json-details")
+def fetchJsonDetails():
+    dump = request.args.get("dump").split(",")
+    if(dump):
+        posts = []
+        for post in get_bulk_posts(dump):
+            # _ids are not serializable and also not needed in the react render of details page.
+            del  post["_id"]
+            posts.append(post)
+        return {"dump": posts},200
+    else:
+        return "no dump specified",400
 
 @app.route("/api/search",methods=["GET"])
 def SearchCS290():

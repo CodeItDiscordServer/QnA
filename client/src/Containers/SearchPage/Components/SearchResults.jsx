@@ -7,22 +7,26 @@ import {Card} from "@material-ui/core"
 
 // import React from 'react';
 // import { Paper,Card,CardHeader,CardContent } from '@material-ui/core'
-import {isInfiniteLoading,getCursor,searchResults,SearchPageFilters} from '../../../Reducers/index.js'
+import {isInfiniteLoading,getCursor,searchResults,SearchPageFilters, SelectedPosts} from '../../../Reducers/index.js'
 import {GoodCheckbox,MissingCheckbox} from "../../../components/CheckboxArt.js"
-import {InfiniteScroll} from '../../../Actions/searchActions'
+import {InfiniteScroll, AddOrRemoveToSelectedPosts} from '../../../Actions/searchActions'
 import InfiniteScrollAlert from "../../../components/InfiniteScrollAlert.js"
+import {PostsSelected4Details} from "../SearchPageContext.js"
+
 
 const stateToProps = state => {
   return {
     isLoading: isInfiniteLoading(state),
     searchResults: searchResults(state),
     filters: SearchPageFilters(state),
-    cursor: getCursor(state)
+    cursor: getCursor(state),
+    selectedPosts:SelectedPosts(state)
   }
 }
 
 const dispatchToProps = {
-  InfiniteScroll
+  InfiniteScroll,
+  SelectPost: AddOrRemoveToSelectedPosts
 };
 
 // not to remove your code luffy sorry i jsut needed to used
@@ -32,6 +36,7 @@ class SearchResults extends Component{
   constructor(){
     super();
     this.scrollListener = this.scrollListener.bind(this)
+
   }
 
   componentDidMount(){
@@ -40,11 +45,9 @@ class SearchResults extends Component{
   componentWillUnmount(){
     window.removeEventListener("scroll",this.scrollListener)
   }
-  componentWillUpdate(nextProps,nextState){
-  }
 
   scrollListener(){
-    console.log(this.props.isLoading);
+    // console.log(this.props.isLoading);
       if(this.props.searchResults.length && !this.props.isLoading){
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
             //search agin with the filters and also the mongodb id of the last element
@@ -57,40 +60,22 @@ class SearchResults extends Component{
 
   render(){
     let results = this.props.searchResults;
-
+    let selectPost= this.props.SelectPost;
+    let selectedPosts = this.props.selectedPosts;
     return (
-      <div>
-         {results !== undefined && !results && <h3>zero search results</h3>}
-         {results && results.map(function(result,index){
-           return (<ResultCard key={`result-${index}`} topic = {result}/>)
-         })}
-         {this.props.isLoading && <InfiniteScrollAlert />}
-      </div>
+
+          <div>
+            {results !== undefined && !results && <h3>zero search results</h3>}
+             {results && results.map(function(result,index){
+               return (<ResultCard selected={selectedPosts.includes(result.id)} SelectPost = {selectPost}  key={`result-${index}`} topic = {result}/>)
+             })}
+             {this.props.isLoading && <InfiniteScrollAlert />}
+           </div>
     )
   }
 
 }
-//
-// const SearchResults = props =>{
-//
-//     if(results !==undefined){
-//         let resultsView = [];
-//         if(results.length!==0){
-//           let count=0
-//             for(let id in results){
-//                 resultsView.push()
-//                 count++;
-//             }
-//
-//         }
-//         return resultsView;
-//
-//     }
-//     else{
-//       return (<div></div>)
-//     }
-//
-// }
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -133,9 +118,9 @@ function metaresult(term,dict,unique){
 
   return (<div key={`meta-result-${term}-${unique}`}>
 
-    {dict[term].length ? dict[term][0].map(function(short,index){
+    {dict[term].length  ? dict[term].map(function(short,index){
 
-      let content = short.replace(term,`<b>${term}</b>`)
+      let content = short[0].replace(term,`<b>${term}</b>`)
       return (
         <span key={`${term}-result-${index}`} css={paraStyle} dangerouslySetInnerHTML={{__html:`...${content}...`}}></span>
       )
@@ -201,19 +186,40 @@ function ResultCard(props){
       padding: 15px;
       color: #007FC7;
       font-size: 1.3em;
-    `
+    `;
+    const isSelectedStyle=css`
+     border: 1px solid #007fc7;
+    `;
 
 
-    return (<Card elevation={1.0} style={{marginLeft:"70px",marginRight:"70px",marginBottom:"20px",padding:"20px"}}>
-        {tagsView(topic)}
-        {topic.summariez && searchTermsPresent(topic.summariez,topic.date)}
-        <div dangerouslySetInnerHTML={{__html:title}} css={subjectStyle}></div>
-        <hr/>
-        {topic.summariez && Object.keys(topic.summariez).map(function(term){
-          return metaresult(term,topic.summariez,topic.created);
-        })}
+    return (
+      <PostsSelected4Details.Consumer>
+        { ({update}) =>
+          (<div onClick={()=>{
+            props.SelectPost(topic.id);
+            console.log("Clicked")
+            // alert(topic.id)
+            }}>
+            <Card
 
-    </Card>)
+                 css={props.selected && isSelectedStyle}
+                 elevation={1.0}
+                 style={{marginLeft:"70px",marginRight:"70px",marginBottom:"20px",padding:"20px"}}
+                 >
+                {tagsView(topic)}
+                {topic.summariez && searchTermsPresent(topic.summariez,topic.date)}
+                <div dangerouslySetInnerHTML={{__html:title}} css={subjectStyle}></div>
+                <hr/>
+                {topic.summariez && Object.keys(topic.summariez).map(function(term){
+                  return metaresult(term,topic.summariez,topic.created);
+                })}
+
+            </Card>
+            </div>
+          )
+        }
+      </PostsSelected4Details.Consumer>
+    );
 
 }
 

@@ -1,0 +1,24 @@
+
+.details-tag{
+  color: orange;
+}
+.details-reply {
+  padding: 15px 15px 15px 10px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  margin-bottom: 10px;
+}
+.details-followup::before {
+  content: "|";
+  margin-right:10px;
+  font-size: 200%;
+}
+.details-followup {
+  padding-left: 15px;
+}
+
+.details-question-subject{
+  font-size:200%;
+  font-stretch: 150%;
+}
+.details-question-content{
+}

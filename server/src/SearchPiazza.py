@@ -173,14 +173,39 @@ def textFilter(array,filter):
 
 
 def search_mongo_4_pizza(filter_src):
-    raw_results = Mongo.queryMongoWithFilter(filter_src)
-    cursor = raw_results[len(raw_results)-1]["id"]
+
+                                                # textFilter shrinks the array, but we want the latest.
+    # we have to query the mongo datase over and over again until we have enough posts to
+    # return to the client.
     if(len(filter_src["searchText"])):
         filter_src["searchHits"] = {}
         filter_src["searchText"] = filter_src["searchText"].split(" ")
-        ##################
-        return { "results": textFilter(raw_results,filter_src),"cursor": cursor }
+        filterd = []
+        count = 14
+        cursor = 0
+        while(count < 15):
+            if(cursor):
+                filter_src["skip"] = cursor
+            raw_results = Mongo.queryMongoWithFilter(filter_src)
+            cursor = raw_results[len(raw_results)-1]["id"] # this is always the cursor,
+
+            # this is how i do array concat
+            ##################
+            for el in textFilter(raw_results,filter_src):
+                filterd.append(el)
+            ##################
+
+            if(len(raw_results) < 15):
+                count = 15 # we exhausted the mongo db
+            else:
+                count = len(filterd)
+
+        print("filterd",len(filterd))
+        return { "results": filterd ,"cursor": cursor }
+    # if no text filter we should have enough results.
     else:
+        raw_results = Mongo.queryMongoWithFilter(filter_src)
+        cursor = raw_results[len(raw_results)-1]["id"] # this is always the cursor,
         return { "results": raw_results, "cursor": cursor }
 
 
