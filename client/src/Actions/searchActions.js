@@ -1,7 +1,8 @@
 import {SET_SEARCH_RESULTS,
   FETCHING,UPDATE_POST_FILTER,LOADING_SCROLL,
 APPEND_SEARCH_RESULTS,
-SET_REACT_POST_DETAILS} from '../ActionTypes/ActionTypes'
+SET_REACT_POST_DETAILS,
+SELECT_DESELECT_POST} from '../ActionTypes/ActionTypes'
 import { G_SRCH_RSLTS_URL} from '../ActionTypes/UrlTypes';
 
 import axios from "axios";
@@ -54,6 +55,11 @@ const updatePostDetailsReact = (status=500,data=[]) =>{
   }
 }
 
+const addOrRemoveToSelectedList = (id)=>{
+  return {
+    type:SELECT_DESELECT_POST,
+    id:id
+  }};
 
 export const appendSearchResults= (status,data=initialData) =>({
     type:APPEND_SEARCH_RESULTS,
@@ -212,3 +218,5 @@ export const SearchSequence = (filters) => dispatch => {
 
 
 }
+
+export const AddOrRemoveToSelectedPosts = (id)=> (dispatch) => {dispatch(addOrRemoveToSelectedList(id))};

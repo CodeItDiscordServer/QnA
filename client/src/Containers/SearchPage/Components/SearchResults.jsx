@@ -7,9 +7,9 @@ import {Card} from "@material-ui/core"
 
 // import React from 'react';
 // import { Paper,Card,CardHeader,CardContent } from '@material-ui/core'
-import {isInfiniteLoading,getCursor,searchResults,SearchPageFilters} from '../../../Reducers/index.js'
+import {isInfiniteLoading,getCursor,searchResults,SearchPageFilters, SelectedPosts} from '../../../Reducers/index.js'
 import {GoodCheckbox,MissingCheckbox} from "../../../components/CheckboxArt.js"
-import {InfiniteScroll} from '../../../Actions/searchActions'
+import {InfiniteScroll, AddOrRemoveToSelectedPosts} from '../../../Actions/searchActions'
 import InfiniteScrollAlert from "../../../components/InfiniteScrollAlert.js"
 import {PostsSelected4Details} from "../SearchPageContext.js"
 
@@ -19,12 +19,14 @@ const stateToProps = state => {
     isLoading: isInfiniteLoading(state),
     searchResults: searchResults(state),
     filters: SearchPageFilters(state),
-    cursor: getCursor(state)
+    cursor: getCursor(state),
+    selectedPosts:SelectedPosts(state)
   }
 }
 
 const dispatchToProps = {
-  InfiniteScroll
+  InfiniteScroll,
+  SelectPost: AddOrRemoveToSelectedPosts
 };
 
 // not to remove your code luffy sorry i jsut needed to used
@@ -58,13 +60,14 @@ class SearchResults extends Component{
 
   render(){
     let results = this.props.searchResults;
-    let active = this.props.active;
+    let selectPost= this.props.SelectPost;
+    let selectedPosts = this.props.selectedPosts;
     return (
 
           <div>
             {results !== undefined && !results && <h3>zero search results</h3>}
              {results && results.map(function(result,index){
-               return (<ResultCard selected={active.includes(result.id)} key={`result-${index}`} topic = {result}/>)
+               return (<ResultCard selected={selectedPosts.includes(result.id)} SelectPost = {selectPost}  key={`result-${index}`} topic = {result}/>)
              })}
              {this.props.isLoading && <InfiniteScrollAlert />}
            </div>
@@ -193,7 +196,9 @@ function ResultCard(props){
       <PostsSelected4Details.Consumer>
         { ({update}) =>
           (<div onClick={()=>{
-            update(topic.id);
+            props.SelectPost(topic.id);
+            console.log("Clicked")
+            // alert(topic.id)
             }}>
             <Card
 
