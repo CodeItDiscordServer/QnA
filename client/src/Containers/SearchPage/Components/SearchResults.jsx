@@ -60,9 +60,8 @@ class SearchResults extends Component{
 
   render(){
     let results = this.props.searchResults;
-    let active = this.props.active;
     let selectPost= this.props.SelectPost;
-    let selectedPosts = this.props.selectedPosts; 
+    let selectedPosts = this.props.selectedPosts;
     return (
 
           <div>

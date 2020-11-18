@@ -1,10 +1,12 @@
 /**  @jsx jsx */
 /* @jsxFrag React.Fragment */
 import { css, jsx } from '@emotion/core';
-import { useContext } from 'react';
-import {PostsSelected4Details} from '../Containers/SearchPage/SearchPageContext'
 import {Link} from "react-router-dom"
 import { connect } from 'react-redux';
+import { Button } from "@material-ui/core"
+
+
+
 import { SelectedPosts } from '../Reducers';
 import {ClearList} from '../Actions/DetailedView'
 // import {Link} from "react-router-dom";
@@ -27,24 +29,27 @@ function LinkToDetails(props){
     padding:10px;
     border-radius: 25%;
       position: fixed;
-      top: 30px;
+      top: 100px;
       right: 0px;
       a{
         text-decoration: none;
       }
     `;
-    console.log(selectedPosts.length)
   if(selectedPosts.length){
     return (
       <div css={stickybutton}>
       {/*ALERT, IN PRODUCTION WE NEED TO REMOVE THE LOCALHOST:5000 part.*/}
-      <button onClick={()=>{
+      <Button size="large"  onClick={()=>{
           props.ClearList();
         }}>
-          Clear
-        </button>
-        <Link to="/details">View details <br />of {selectedPosts.length} posts!</Link>
-        
+          X
+        </Button>
+        <Button size="large" variant="outlined">
+          <Link to="/details">
+            View details <br />of {selectedPosts.length} posts!
+            </Link>
+        </Button>
+
       </div>
     )
   }

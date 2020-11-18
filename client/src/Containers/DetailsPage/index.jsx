@@ -10,8 +10,9 @@ import { connect } from 'react-redux';
 import { Button } from "@material-ui/core";
 import {
   isSearchPageLoading,
-  getPiazzaDetails
-} from "../../Reducers/index.js"
+  getPiazzaDetails,
+  SelectedPosts
+} from "../../Reducers"
 import { DetailsJsonSearchSequence } from "../../Actions/searchActions.js"
 import ShareLinkAlert from "../../components/LinkToDetails.js"
 
@@ -19,6 +20,7 @@ import ShareLinkAlert from "../../components/LinkToDetails.js"
 const stateToProps = state => ({
   isLoading: isSearchPageLoading(state),
   details: getPiazzaDetails(state),
+  ids: SelectedPosts(state)
 })
 
 const dispatchToProps = {
