@@ -6,10 +6,5 @@ server/src/__pycache__/
 client/node_modules
 .env
 .vscode
-<<<<<<< HEAD
-
 
 server/static/bundle/*
-=======
-server/static/bundle/*
->>>>>>> 1684fcd698d25fb402dc792c75076f1890b37f1b
