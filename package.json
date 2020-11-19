@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client",
-    "start" : "cd server && python -m venv venv && source venv/bin/activate pip install -r requirements.txt && flask run"
+    "start" : "gunicorn server.api:app"
   },
   "repository": {
     "type": "git",
