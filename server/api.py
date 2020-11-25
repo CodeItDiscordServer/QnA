@@ -71,5 +71,8 @@ def create_app(testing = False):
         if(request.args.get("skip") != "0"):
             filter["skip"] = request.args.get("skip")
 
+
+    return app
+
         #####
         return search_mongo_4_pizza(filter),200
