@@ -1,8 +1,8 @@
 
 from flask import Flask,request,render_template
-from src.SearchPiazza import search_mongo_4_pizza
+from server.src.SearchPiazza import search_mongo_4_pizza
 # from flask.ext.api.parsers import JSONParser
-from src.Mongo import get_bulk_posts
+from server.src.Mongo import get_bulk_posts
 
 app = Flask(__name__)
 
@@ -19,7 +19,7 @@ hardcoded={
 @app.route("/")
 def  react():
     return render_template("index.html")
-    
+
 @app.route('/api/')
 def GiveGrettings():
     return {"greetings": "you suck big pp"}

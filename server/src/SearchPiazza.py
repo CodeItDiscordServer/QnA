@@ -1,12 +1,12 @@
 from piazza_api import Piazza
-import src.Mongo  as Mongo
+import server.src.Mongo  as Mongo
 
 import json
 
 p =Piazza()
 credents = ""
 
-with open('./config.json') as json_file:
+with open('./server/config.json') as json_file:
     credents = json.load(json_file)
 
 

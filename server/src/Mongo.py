@@ -7,7 +7,7 @@ import time
 
 from bs4 import BeautifulSoup
 
-with open('./config.json') as json_file:
+with open('./server/config.json') as json_file:
     credents = json.load(json_file)
 
 
