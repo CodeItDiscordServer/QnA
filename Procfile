@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -b localhost:$PORT "server.api:app"
+web: gunicorn -w 4  --bind 0.0.0.0:$PORT "server.api:app"
